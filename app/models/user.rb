@@ -5,5 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
 
-  enum :role, { guest: 'guest', admin: 'admin', event_manager: 'event_manager', activity_owner: 'activity_owner' }, default: 'guest'
+  enum :role, { guest: "guest", admin: "admin", event_manager: "event_manager", activity_owner: "activity_owner" }, default: "guest"
 end
