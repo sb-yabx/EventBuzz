@@ -12,4 +12,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
+
+  # Admin dashboard route
+  get "admin/dashboard", to: "admin/dashboard#index", as: :admin_dashboard
+
+  get "admin/employees/new", to: "admin/employee#new", as: :new_employee
+  post "admin/employees", to: "admin/employee#create", as: :create_employee
 end

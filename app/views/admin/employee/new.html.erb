@@ -1,0 +1,26 @@
+<div class="form-container">
+    <h2 class="form-title">Create Employee Account</h2>
+
+<%= form_with model: @user, url: create_employee_path, local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :role %>
+    <%= f.select :role, User.roles.keys.map { |r| [r.humanize, r] }, class: "form-control" %>
+  </div>
+
+    <div class="form-group">
+        <%= f.submit "Create Employee", class: "btn btn-primary" %>
+    </div>
+
+<% end %>
+
+</div>
