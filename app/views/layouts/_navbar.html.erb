@@ -1,4 +1,6 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #ff7a00;">
+<% navbar_color = (current_user && (current_user.role == "organization" || current_user.role == "admin")) ? "#181615" : "#ff7a00"%>
+
+<nav class="navbar navbar-expand-lg" style="background-color: <%= navbar_color %>;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#" style="color: #ffffff; font-weight: bold;">EventBuzz</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
