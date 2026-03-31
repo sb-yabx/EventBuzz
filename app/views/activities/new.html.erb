@@ -1,0 +1,74 @@
+<div class="container py-5">
+
+  <div class="card border-0 shadow-lg rounded-4">
+    <div class="card-body p-4">
+
+      <!-- HEADER -->
+      <h4 class="fw-bold mb-4">Create Activity</h4>
+
+      <%= form_with model: [@event, @activity] do |f| %>
+
+        <div class="row g-3">
+
+          <!-- ACTIVITY NAME -->
+          <div class="col-md-6">
+            <%= f.label :activity_name, class: "form-label fw-semibold" %>
+            <%= f.text_field :activity_name,
+                  class: "form-control rounded-3",
+                  placeholder: "Enter activity name" %>
+          </div>
+
+          <!-- ACTIVITY OWNER -->
+          <div class="col-md-6">
+            <%= f.label :user_id, "Assign Owner", class: "form-label fw-semibold" %>
+
+            <%= f.collection_select :user_id,
+                  User.where(role: "activity_owner"),
+                  :id,
+                  :name,
+                  { prompt: "Select Activity Owner" },
+                  class: "form-select rounded-3" %>
+          </div>
+
+          <!-- START TIME -->
+          <div class="col-md-6">
+            <%= f.label :start_time, class: "form-label fw-semibold" %>
+            <%= f.time_field :start_time,
+                  class: "form-control rounded-3" %>
+          </div>
+
+          <!-- END TIME -->
+          <div class="col-md-6">
+            <%= f.label :end_time, class: "form-label fw-semibold" %>
+            <%= f.time_field :end_time,
+                  class: "form-control rounded-3" %>
+          </div>
+
+          <!-- DESCRIPTION -->
+          <div class="col-12">
+            <%= f.label :activity_description, class: "form-label fw-semibold" %>
+            <%= f.text_area :activity_description,
+                  rows: 3,
+                  class: "form-control rounded-3",
+                  placeholder: "Describe the activity..." %>
+          </div>
+
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="mt-4 d-flex gap-2">
+
+        <%= f.submit "Create Activity", class: "btn btn-dark rounded-pill px-4" %>
+
+          <%= link_to "Cancel",
+                event_path(@event),
+                class: "btn btn-outline-secondary rounded-pill px-4" %>
+
+        </div>
+
+      <% end %>
+
+    </div>
+  </div>
+
+</div>

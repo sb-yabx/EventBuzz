@@ -1,5 +1,5 @@
-<% navbar_color = (current_user && (current_user.role == "organization" || current_user.role == "admin")) ? "#181615" : "#ff7a00"%>
-
+<%# #b42508 %>
+<% navbar_color = ["event_manager", "activity_owner", "admin"].include?(current_user&.role) ? "black" : "#ff7a00" %>
 <nav class="navbar navbar-expand-lg" style="background-color: <%= navbar_color %>;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#" style="color: #ffffff; font-weight: bold;">EventBuzz</a>
@@ -14,27 +14,67 @@
           <a class="nav-link active" aria-current="page" href="/" style="color: #ffffff;">Home</a>
         </li>
 
-        <%# events %>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #ffffff;">Events</a>
-        </li>
-
 
         <%# user info %>
          <% if user_signed_in? %>
         <li class="nav-item">
           <a class="nav-link" href="#" style="color: #ffffff;">Welcome, <%= current_user.name %></a>
         </li>
+        
         <%# admin dashboard %>
          <% if current_user.role == "admin" %>
          <li class="nav-item">
             <a class="nav-link" href="/admin/dashboard" style="color: #ffffff;">Dashboard</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/admin/employees/new" style="color: #ffffff;">Add more employee</a>
+            <a class="nav-link" href="/admin/employees/new" style="color: #ffffff;">Add Users</a>
           </li>
-        <% end %>
+          <li class="nav-item">
+          <a class="nav-link" href="/venues" style="color: #ffffff;">Venues</a>
+        </li>
+         <%# events %>
+        <li class="nav-item">
+          <a class="nav-link" href="/events" style="color: #ffffff;">Events</a>
+        </li>
+        <%# end%>
+
+        <%# event manager dashboard %>
+        <% elsif current_user.role == "event_manager"%>
+        <li class="nav-item">
+          <%= link_to "My Events", index_event_manager_path(current_user.id),
+          class: "nav-link", style: "color: #ffffff;" %>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/events/new" style="color: #ffffff;">Add Events</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/rsvp/<%= current_user.id %>/dashboard" style="color: #ffffff;">RSVP Dahsboard</a>
+        </li>
+        <% #end%>
+
+        <%# Activity owners %>
+        <% elsif current_user.role == "activity_owner"%>
+        <li class="nav-item">
+          <%= link_to "My Events/Activities", index_activity_manager_path(current_user.id),
+          class: "nav-link", style: "color: #ffffff;" %>
+        </li>
+        <% #end%>
+
+        <%# For guests %>
+        <% else %>
+        <li class="nav-item">
+          <%= link_to "RSVPs", my_invites_path,
+          class: "nav-link", style: "color: #ffffff;" %>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to "Events", my_events_path,
+          class: "nav-link", style: "color: #ffffff;" %>
+        </li>
         <%end%>
+
 
        
         <%# User authentication %>
@@ -53,11 +93,8 @@
             <% end %>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true" style="color: rgba(255,255,255,0.6);">Disabled</a>
-        </li>
       </ul>
-
+     <%end%>
     </div>
   </div>
 </nav>

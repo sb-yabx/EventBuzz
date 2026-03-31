@@ -1,0 +1,61 @@
+<div class="activity-show">
+
+  <!-- HERO -->
+  <div class="activity-hero">
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+      <h1><%= @activity.activity_name %></h1>
+      <p><%= @activity.event.name %></p>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="activity-container">
+
+    <div class="activity-details">
+      <h2>About this Activity</h2>
+      <p><%= @activity.activity_description %></p>
+
+      <div class="info-grid">
+        <div>
+          <strong>Date:</strong>
+          <p><%= @activity.event.date.strftime("%d %b %Y")%></p>
+        </div>
+
+        <div>
+          <strong>Time:</strong>
+          <p><%= @activity.start_time.strftime("%I:%M %p") %></p>
+        </div>
+
+        <div>
+          <strong>Location:</strong>
+          <p><%=@activity.event.venue.name%> - <%= @activity.event.venue.address %></p>
+          
+        </div>
+
+        <div>
+          <strong>Created By:</strong>
+          <p><%= @activity.user.email %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <% if current_user && (current_user == @activity.user || current_user.id == @activity.event.event_manager_id) %>
+      <div class="activity-actions">
+        <%= link_to "Edit", edit_event_activity_path(@activity.event, @activity), class: "btn-edit" %>
+        <%= link_to "Delete", event_activity_path(@activity.event, @activity),
+              method: :delete,
+              data: { confirm: "Are you sure?" },
+              class: "btn-delete" %>
+      </div>
+    <% end %>
+
+    <!-- BACK BUTTON -->
+    <div class="back-btn">
+      <%= link_to "← Back to Event", event_path(@activity.event), class: "btn-back" %>
+    </div>
+
+  </div>
+</div>

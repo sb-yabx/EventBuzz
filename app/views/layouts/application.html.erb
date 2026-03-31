@@ -3,28 +3,78 @@
   <head>
     <title><%= content_for(:title) || "Event Buzz" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Event Buzz">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="turbo-cache-control" content="no-cache">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= yield :head %>
+    
+    <!-- Styles -->
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "forms", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "home", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "event", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "rsvp", "data-turbo-track": "reload" %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= stylesheet_link_tag "forms", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= javascript_include_tag "application", type: "module" %>
   </head>
-  <%= render('layouts/navbar')%>
-  <body>
+
+  <body> 
+
+    <%= render 'layouts/navbar' %>
     <%= yield %>
+
+    <div id="flash-data" data-flash='<%= flash.to_hash.to_json %>'></div>
+
+<script>
+function showFlash() {
+  const el = document.getElementById("flash-data");
+  if (!el) return;
+
+  const flash = JSON.parse(el.dataset.flash || "{}");
+  if (Object.keys(flash).length === 0) return;
+
+  if (el.dataset.shown) return; 
+
+  Object.entries(flash).forEach(([type, message]) => {
+    Swal.fire({
+      toast: true,
+      position: 'top',
+      icon: type === "notice" ? "success" : "error",
+      title: message,
+      showConfirmButton: false,
+      timer: 3000
+    });
+  });
+
+  el.dataset.shown = "true";
+}
+
+
+document.addEventListener("DOMContentLoaded", showFlash);
+document.addEventListener("turbo:render", showFlash);
+</script>
+
+<script>
+  document.addEventListener("turbo:load", function () {
+  const emailInput = document.getElementById("emails_input");
+  const excelInput = document.getElementById("excel_input");
+
+  if (!emailInput || !excelInput) return;
+
+  emailInput.addEventListener("input", function () {
+    excelInput.disabled = emailInput.value.trim().length > 0;
+  });
+
+  excelInput.addEventListener("change", function () {
+    emailInput.disabled = excelInput.files.length > 0;
+  });
+});
+</script>
+
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    
+
   </body>
 </html>

@@ -1,0 +1,91 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+  <% if @rsvp.errors.any? %>
+  <div class="alert alert-danger">
+    <% @rsvp.errors.full_messages.each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
+  </div>
+<% end %>
+
+  <div class="rsvp-modern-card">
+
+    <!-- Header -->
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">RSVP</h2>
+      <p class="text-muted">for <strong><%= @event.name %></strong></p>
+    </div>
+
+    <%= form_with model: [@event, @rsvp], class: "rsvp-form" do |f| %>
+
+      <!-- STATUS -->
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Will you attend?</label>
+        <div class="toggle-group">
+          <%= f.radio_button :status, "attending", id: "attending", hidden: true %>
+          <label for="attending" class="toggle-btn">✔ Attending</label>
+
+          <%= f.radio_button :status, "declined", id: "declined", hidden: true %>
+          <label for="declined" class="toggle-btn">✖ Not Attending</label>
+        </div>
+      </div>
+
+      <!-- ROW -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <%= f.label :dietary_preference, class: "form-label fw-semibold" %>
+          <%= f.select :dietary_preference,
+                Rsvp.dietary_preferences.keys.map { |k| [k.humanize, k] },
+                {}, class: "form-select modern-input" %>
+        </div>
+
+        <div class="col-md-6">
+          <%= f.label :seating_preference, class: "form-label fw-semibold" %>
+          <%= f.select :seating_preference,
+                Rsvp.seating_preferences.keys.map { |k| [k.humanize, k] },
+                {}, class: "form-select modern-input" %>
+        </div>
+      </div>
+
+      <!-- PARKING -->
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Need Parking?</label>
+        <div class="toggle-group">
+          <%= f.radio_button :need_parking, "true", id: "parking_yes", hidden: true %>
+          <label for="parking_yes" class="toggle-btn">Yes</label>
+
+          <%= f.radio_button :need_parking, "false", id: "parking_no", hidden: true %>
+          <label for="parking_no" class="toggle-btn">No</label>
+        </div>
+      </div>
+
+      <!-- ACCOMMODATION -->
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Need Accommodation?</label>
+        <div class="toggle-group">
+          <%= f.radio_button :need_accommodation, "true", id: "acc_yes", hidden: true %>
+          <label for="acc_yes" class="toggle-btn">Yes</label>
+
+          <%= f.radio_button :need_accommodation, "false", id: "acc_no", hidden: true %>
+          <label for="acc_no" class="toggle-btn">No</label>
+        </div>
+      </div>
+
+      <!-- TEXTAREA -->
+      <div class="mb-4">
+        <%= f.label :special_request, class: "form-label fw-semibold" %>
+        <%= f.text_area :special_request,
+              class: "form-control modern-input",
+              rows: 3,
+              placeholder: "Any special requests...Leave blank if not" %>
+      </div>
+
+      <!-- BUTTON -->
+      <div class="d-grid">
+        <%= f.submit "Submit RSVP", class: "btn modern-submit-btn" %>
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+  sessions: 'users/sessions'
+}
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -12,10 +15,44 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
+ 
+  resources :venues
+
+  resources :events do
+    resources :activities
+    
+    resources :rsvps, only: [:new, :create, :index] do
+    collection do
+      get :special_requests
+    end
+  end
+
+    get :invite_guests
+    post :send_invites, on: :member
+
+  end
+
+  get "guest/invites", to: "guests#index", as: :my_invites
+  get "guest/events", to: "guests#events", as: :my_events
+
+
 
   # Admin dashboard route
   get "admin/dashboard", to: "admin/dashboard#index", as: :admin_dashboard
+  get "rsvp/:id/dashboard", to: "rsvps#dashboard", as: :rsvp_dashboard
 
-  get "admin/employees/new", to: "admin/employee#new", as: :new_employee
-  post "admin/employees", to: "admin/employee#create", as: :create_employee
+  get "rsvp/:id/invites", to: "rsvps#invitesSend", as: :rsvp_invites
+
+  namespace :admin do
+    resources :employees
+  end
+
+
+
+  get "admin/show/eventManagers" , to: "admin/employees#showEventManagers", as: :show_event_managers
+  get "admin/show/activityOwners", to: "admin/employees#showActivityOwners", as: :show_activity_owners
+
+  get "/myevents/:id", to: "event_manager#index", as: :index_event_manager
+  get "/myActivities/:id", to: "activity_owner#index", as: :index_activity_manager
+
 end

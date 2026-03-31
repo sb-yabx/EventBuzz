@@ -1,0 +1,36 @@
+<div class="rsvp-dashboard">
+  <div class="d-flex gap-2 align-center">
+     <%= link_to "← Back", request.referer || root_path, class: "btn bg-dark btn-dark rounded-pill px-3" %>
+     </div>
+  <h2>Special Requests for <%= @event.name %></h2>
+
+
+  <table class="rsvp-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Request</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if @rsvps.any? %>
+        <% @rsvps.each do |rsvp| %>
+          <tr>
+            <td><%= rsvp.user&.name || "Guest" %></td>
+            <td><%= rsvp.user&.email %></td>
+            <td><%= rsvp.special_request %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="3" class="text-center text-muted py-4">
+            🚫 No special requests found
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
