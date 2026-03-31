@@ -1,0 +1,64 @@
+<div class="container py-5">
+
+  <!-- Back Button -->
+  <div class="mb-4">
+    <%= link_to "← Back", request.referer || root_path, 
+        class: "btn btn-outline-dark rounded-pill px-4" %>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+
+      <!-- Card -->
+      <div class="card border-0 shadow-lg rounded-4 p-4">
+
+        <!-- Title -->
+        <h3 class="text-center fw-bold mb-3">Invite Guests</h3>
+        <p class="text-center text-muted mb-4">
+          Send invitations to your guests via email
+        </p>
+
+        <!-- Form -->
+        <%= form_with url: send_invites_event_path(@event), method: :post , multipart: true do %>
+<div data-controller="invite">
+
+  <div class="mb-3">
+    <%= label_tag :emails, "Enter Emails" %>
+    <%= text_area_tag :emails, nil,
+          id: "emails_input",
+          data: { invite_target: "email" },
+          class: "form-control" %>
+  </div>
+
+  <div class="text-center my-2">OR</div>
+
+  <div class="mb-3">
+    <%= file_field_tag :excel_file,
+          id: "excel_input",
+          data: { invite_target: "excel" },
+          class: "form-control" %>
+  </div>
+
+</div>
+         
+
+          <!-- Buttons -->
+          <div class="d-flex justify-content-between align-items-center mt-4">
+
+            <%= link_to "View Invites", 
+                  rsvp_invites_path(@event), data: { turbo: false },
+                  class: "btn btn-outline-primary rounded-pill px-4" %>
+
+            <%= submit_tag "Send Invitations", 
+                  class: "btn text-white rounded-pill px-4",
+                  style: "background: linear-gradient(90deg, #ff7a00, #ffb347); border: none;" %>
+
+          </div>
+
+        <% end %>
+
+      </div>
+
+    </div>
+  </div>
+</div>

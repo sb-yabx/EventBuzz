@@ -1,0 +1,65 @@
+<div class="container py-5">
+
+  <div class="card border-0 shadow-lg rounded-4">
+    <div class="card-body p-5">
+
+      <h2 class="fw-bold mb-4">✏️ Edit Event</h2>
+
+      <%= form_with(model: @event, local: true) do |f| %>
+
+        <!-- Name -->
+        <div class="mb-3">
+          <%= f.label :name, class: "form-label fw-semibold" %>
+          <%= f.text_field :name, class: "form-control form-control-lg rounded-3", required: true %>
+        </div>
+
+        <!-- Date -->
+        <div class="mb-3">
+          <%= f.label :date, class: "form-label fw-semibold" %>
+          <%= f.date_field :date, class: "form-control rounded-3", required: true %>
+        </div>
+
+        <!-- Time Row -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <%= f.label :start_time, class: "form-label fw-semibold" %>
+            <%= f.time_field :start_time, class: "form-control rounded-3", required: true %>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <%= f.label :end_time, class: "form-label fw-semibold" %>
+            <%= f.time_field :end_time, class: "form-control rounded-3", required: true %>
+          </div>
+        </div>
+
+        <!-- Venue -->
+        <div class="mb-3">
+          <%= f.label :venue_id, "Venue", class: "form-label fw-semibold" %>
+          <%= f.collection_select :venue_id, Venue.all, :id, :name,
+                { prompt: "Select Venue" },
+                class: "form-select rounded-3" %>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-4">
+          <%= f.label :description, class: "form-label fw-semibold" %>
+          <%= f.text_area :description, rows: 4,
+                class: "form-control rounded-3" %>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex gap-3">
+          <%= f.submit "Update Event",
+                class: "btn btn-dark px-4 rounded-pill" %>
+
+          <%= link_to "Cancel",
+                event_path(@event),
+                class: "btn btn-outline-secondary px-4 rounded-pill" %>
+        </div>
+
+      <% end %>
+
+    </div>
+  </div>
+
+</div>

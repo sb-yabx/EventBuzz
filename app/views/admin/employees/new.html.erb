@@ -1,7 +1,7 @@
 <div class="form-container">
     <h2 class="form-title">Create Employee Account</h2>
 
-<%= form_with model: @user, url: create_employee_path, local: true do |f| %>
+<%= form_with model: [:admin,@user], url: admin_employees_path, local: true do |f| %>
   <div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name, class: "form-control" %>

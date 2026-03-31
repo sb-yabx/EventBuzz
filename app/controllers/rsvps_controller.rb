@@ -1,0 +1,112 @@
+class RsvpsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :only_managers, except: [:new,:create]
+  before_action :only_event_manager , only: [:dashboard]
+
+  def index
+    @event = Event.find(params[:event_id])
+    @rsvps = @event.rsvps.includes(:user)
+
+
+    # status
+    if params[:status].present?
+      @rsvps = @rsvps.where(status: Rsvp.statuses[params[:status]])
+    end
+
+    # parking
+    if params[:parking].present?
+      @rsvps = @rsvps.where(need_parking: params[:parking] == "true")
+    end
+
+    # accommodation
+    if params[:accommodation].present?
+      @rsvps = @rsvps.where(need_accommodation: params[:accommodation] == "true")
+    end
+
+    # diet
+    if params[:diet].present?
+      @rsvps = @rsvps.where(dietary_preference: Rsvp.dietary_preferences[params[:diet]])
+    end
+  end
+
+
+  def new
+    @event = Event.find(params[:event_id])
+    guest = Guest.find_by(email: current_user.email, event: @event)
+
+    unless guest
+      redirect_to root_path, alert: "You are not invited"
+    end
+
+    guest.update(user_id:current_user.id) if guest
+
+    @rsvp = Rsvp.new
+
+  end
+
+  def create
+    @event = Event.find(params[:event_id])
+   
+    @rsvp = @event.rsvps.find_or_initialize_by(user_id: current_user.id)
+    @rsvp.assign_attributes(rsvp_params)
+
+    if @rsvp.save
+      redirect_to @event, notice: "RSVP submitted. Thank You"
+    else
+      flash.now[:alert] =  "Error Occured. Try again"
+      render :new 
+    end
+  end
+
+  def dashboard
+    @events = Event.where(event_manager_id: params[:id]).order(Arel.sql("date < current_date, date ASC"))
+  end
+
+  def special_requests
+    @event = Event.find(params[:event_id])
+    @rsvps = @event.rsvps.where.not(special_request: [nil, ""])
+  end
+
+  def invitesSend
+    @event = Event.find(params[:id])
+    @guests = @event.guests.all
+  end
+
+
+
+
+  private
+  def rsvp_params
+    params.require(:rsvp).permit(:status,
+    :special_request,
+    :dietary_preference,
+    :seating_preference,
+    :need_parking,
+    :need_accommodation)
+  end
+
+  def only_managers
+  allowed_roles = ["event_manager", "admin", "activity_owner"]
+
+  unless allowed_roles.include?(current_user&.role)
+    redirect_to root_path, alert: "Access denied"
+  end
+  end
+
+  def only_event_manager
+    unless current_user&.role == "event_manager"
+      redirect_to root_path, alert: "Access denied"
+    end
+  end
+
+
+  def only_guest
+    allowed_roles = ["event_manager", "admin", "activity_owner"]
+    return if allowed_roles.include?(current_user&.role)
+    redirect_to root_path, alert: "Only guests can see"
+    
+  end
+
+
+
+end

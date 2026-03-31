@@ -1,32 +1,92 @@
-<div class="hero-section" style="text-align:center; padding:120px 20px; background: linear-gradient(135deg, #ff7a00, #ff9a2b); color:white;">
-  <h1 class="main-heading" style="font-size:60px; font-weight:700; margin-bottom:15px;">EventBuzz</h1>
-  <p class="tagline" style="font-size:22px; opacity:0.9; max-width:600px; margin:0 auto;">Discover the Buzz Around Every Event</p>
+<div class="hero-section">
+  <div class="hero-overlay"></div>
+
+  <div class="hero-box">
+    <h1 class="main-heading">EventBuzz</h1>
+    <p class="tagline">Discover the Buzz Around Every Event</p>
+
+    <% if !current_user %>
+      <div class="auth-buttons">
+        <%= link_to "Login", new_user_session_path, class: "btn btn-light" %>
+        <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-outline" %>
+      </div>
+    <% end %>
+  </div>
 </div>
 
-<div class="events-section" style="padding:80px 40px; background:white;">
-  <h2 class="section-title" style="text-align:center; font-size:36px; color:#ff7a00; margin-bottom:50px;">Featured Events</h2>
+<!-- EVENTS SECTION -->
+<div class="events-section">
+  <h2 class="section-title">Featured Events</h2>
 
-  <div class="events-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:30px;">
+  <div class="events-grid">
+    <% events = [
+      {title: "Music Festival", img: "https://images.unsplash.com/photo-1506157786151-b8491531f063"},
+      {title: "Startup Conference", img: "https://images.unsplash.com/photo-1511578314322-379afb476865"},
+      {title: "Creative Workshops", img: "https://images.unsplash.com/photo-1523580494863-6f3031224c94"},
+      {title: "Art & Culture", img: "https://images.unsplash.com/photo-1497032205916-ac775f0649ae"}
+    ] %>
+
+    <% events.each do |event| %>
+      <div class="event-card" onclick="window.location='#'">
+        <img src="<%= event[:img] %>">
+        <div class="event-content">
+          <h3><%= event[:title] %></h3>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- ABOUT SECTION -->
+<div class="about-section">
+  <div class="about-container">
+    <h2>About EventBuzz</h2>
+    <p>
+      EventBuzz is your go-to platform for discovering, managing, and experiencing events like never before.
+      Whether it's music festivals, corporate conferences, creative workshops, or cultural gatherings — 
+      we bring everything together in one place.
+    </p>
+
+    <p>
+      Our mission is to connect people with experiences that matter. Event organizers can seamlessly create 
+      and manage events, while users can explore, register, and stay updated with the latest happenings.
+    </p>
+
+    <div class="about-highlights">
+      <div>🎟️ Easy Event Booking</div>
+      <div>📢 Smart Event Management</div>
+      <div>🌍 Discover Local & Global Events</div>
+      <div>⚡ Real-time Updates</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
     
-    <div class="event-card" style="border-radius:12px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.3s; cursor:pointer;">
-      <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063" style="width:100%; height:200px; object-fit:cover;">
-      <h3 style="text-align:center; padding:20px; color:#333;">Music Festival</h3>
+    <div class="footer-left">
+      <h3>EventBuzz</h3>
+      <p>Discover the Buzz Around Every Event</p>
     </div>
 
-    <div class="event-card" style="border-radius:12px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.3s; cursor:pointer;">
-      <img src="https://images.unsplash.com/photo-1511578314322-379afb476865" style="width:100%; height:200px; object-fit:cover;">
-      <h3 style="text-align:center; padding:20px; color:#333;">Startup Conference</h3>
+    <div class="footer-links">
+      <a href="#">Home</a>
+      <a href="#">Events</a>
+      <a href="#">Contact</a>
+      <a href="#">About</a>
     </div>
 
-    <div class="event-card" style="border-radius:12px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.3s; cursor:pointer;">
-      <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94" style="width:100%; height:200px; object-fit:cover;">
-      <h3 style="text-align:center; padding:20px; color:#333;">Creative Workshops</h3>
-    </div>
-
-    <div class="event-card" style="border-radius:12px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.3s; cursor:pointer;">
-      <img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae" style="width:100%; height:200px; object-fit:cover;">
-      <h3 style="text-align:center; padding:20px; color:#333;">Art & Culture</h3>
+    <div class="footer-social">
+      <p>Follow Us</p>
+      <div>
+        <a href="#">🌐</a>
+        <a href="#">📸</a>
+        <a href="#">🐦</a>
+      </div>
     </div>
 
   </div>
-</div>
+
+  <p class="footer-bottom">© <%= Time.now.year %> EventBuzz. All rights reserved.</p>
+</footer>

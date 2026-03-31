@@ -2,7 +2,7 @@
 
 <p>Hello <%= @user.name %>,</p>
 
-<p>Your account has been created by the admin. Here are your login credentials:</p>
+<p>Your account has been created by the admin. Your role is <b><%= @user.role.humanize %></b>. Here are your login credentials:</p>
 
 <p>
   Email: <%= @user.email %><br>

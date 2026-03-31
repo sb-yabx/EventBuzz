@@ -88,6 +88,10 @@
   transition: all 0.3s ease;
 }
 
+.btn-dark{
+  border: 2px solid white;
+}
+
 .btn:hover {
   background-color: #e65c00; /* Darker orange on hover */
   border-color: #e65c00;
@@ -124,3 +128,13 @@
   color: #e65c00; /* Darker orange hover */
   text-decoration: none;
 }
+
+
+
+
+
+
+
+
+
+
