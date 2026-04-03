@@ -1,0 +1,103 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-5">📊 Guest Preference Report</h2>
+
+   <div class="text-end">
+     <%= link_to "← Back", request.referer || root_path, class: "btn  btn-dark rounded-pill px-3" %>
+     </div>
+
+<br>
+  <!-- UPCOMING -->
+  <h4 class="mb-4 text-primary">Upcoming Events</h4>
+
+  <div class="row">
+    <% @upcoming_events.each do |event| %>
+      <% rsvps = event.rsvps %>
+
+      <div class="col-md-4 mb-4">
+        <div class="event-card">
+
+          <!-- HEADER -->
+          <div class="card-header-clean">
+            <h6><%= event.name %></h6>
+            <small><%= event.date.strftime("%d %b %Y") %></small>
+          </div>
+
+          <!-- DIET -->
+          <div class="section">
+            <p class="section-title">🍽 Dietary</p>
+            <div class="badge-row">
+              <span class="badge bg-success">Veg <%= rsvps.where(dietary_preference: "veg").count %></span>
+              <span class="badge bg-danger">Non-Veg <%= rsvps.where(dietary_preference: "non_veg").count %></span>
+              <span class="badge bg-warning text-dark">Vegan <%= rsvps.where(dietary_preference: "vegan").count %></span>
+            </div>
+          </div>
+
+          <!-- SEATING -->
+          <div class="section">
+            <p class="section-title">💺 Seating</p>
+            <div class="badge-row">
+              <span class="badge bg-dark">Front <%= rsvps.where(seating_preference: "front").count %></span>
+              <span class="badge bg-secondary">Back <%= rsvps.where(seating_preference: "back").count %></span>
+              <span class="badge bg-info text-dark">Window <%= rsvps.where(seating_preference: "window").count %></span>
+            </div>
+          </div>
+
+          <!-- PARKING + ACCOM -->
+          <div class="section split">
+            <div>
+              <p class="section-title">🚗 Parking</p>
+              <p>Yes: <strong><%= rsvps.where(need_parking: true).count %></strong></p>
+              <p>No: <strong><%= rsvps.where(need_parking: false).count %></strong></p>
+            </div>
+
+            <div>
+              <p class="section-title">🏨 Stay</p>
+              <p>Yes: <strong><%= rsvps.where(need_accommodation: true).count %></strong></p>
+              <p>No: <strong><%= rsvps.where(need_accommodation: false).count %></strong></p>
+            </div>
+          </div>
+
+          <!-- FOOTER -->
+          <div class="card-footer-clean">
+            <span class="status upcoming">Upcoming</span>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <hr class="my-5">
+
+  <!-- COMPLETED -->
+  <h4 class="mb-4 text-secondary">Completed Events</h4>
+
+  <div class="row">
+    <% @completed_events.each do |event| %>
+      <% rsvps = event.rsvps %>
+
+      <div class="col-md-4 mb-4">
+        <div class="event-card completed">
+
+          <div class="card-header-clean">
+            <h6><%= event.name %></h6>
+            <small><%= event.date.strftime("%d %b %Y") %></small>
+          </div>
+
+          <div class="section">
+            <p class="section-title">🍽 Dietary</p>
+            <div class="badge-row">
+              <span class="badge bg-success">Veg <%= rsvps.where(dietary_preference: "veg").count %></span>
+              <span class="badge bg-danger">Non-Veg <%= rsvps.where(dietary_preference: "non_veg").count %></span>
+            </div>
+          </div>
+
+          <div class="card-footer-clean">
+            <span class="status completed">Completed</span>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

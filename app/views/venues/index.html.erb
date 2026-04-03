@@ -1,10 +1,13 @@
 <div class="container mt-5">
 
-  <div class="d-flex justify-content-between align-items-center mb-4">
+   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold">All Venues</h2>
-
+  <div class="d-flex gap-2">
+     <%= link_to "← Back", request.referer || root_path, class: "btn  btn-dark rounded-pill px-3" %>
     <%= link_to "Add New Venue", new_venue_path, class: "btn btn-success" %>
+     </div>
   </div>
+
 
   <div class="card shadow-sm">
 
@@ -16,7 +19,7 @@
 
       <% if @venues.any? %>
 
-      <table class="table table-hover table-striped align-middle">
+      <table class="table table-hover align-middle">
 
         <thead class="table-light">
           <tr>
@@ -45,12 +48,23 @@
 
             <td>
 
-              <%= link_to "Show", venue_path(venue), class: "btn btn-sm btn-outline-warning" %>
 
-              <%= link_to "Delete", venue_path(venue),
-                  method: :delete,
-                  data: { confirm: "Are you sure?" },
-                  class: "btn btn-sm btn-outline-danger" %>
+              <%= link_to venue_path(venue),
+                          class: "btn btn-sm btn-outline-dark rounded-pill me-2" do %>
+                          <i class="bi bi-eye"></i>
+                        <% end %>
+
+              <%= link_to edit_venue_path(venue),
+                          class: "btn btn-sm btn-outline-primary rounded-pill me-2" do %>
+                          <i class="bi bi-pencil"></i>
+                        <% end %>
+
+                        <%= link_to venue_path(venue),
+                          method: :delete,
+                          data: { confirm: "Are you sure?" },
+                          class: "btn btn-sm btn-outline-danger rounded-pill" do %>
+                          <i class="bi bi-trash"></i>
+                        <% end %>
             </td>
 
           </tr>

@@ -20,10 +20,10 @@ class ActivitiesController < ApplicationController
     @activity = @event.activities.new(activity_params)
 
     if @activity.save
-      flash[:notice] = "Event created successfully!"   # ✅ redirect → flash
+      flash[:notice] = "Event created successfully!"  
       redirect_to event_path(@event)
     else
-      flash.now[:alert] = "Try again"                  # ✅ render → flash.now
+      flash.now[:alert] = "Try again"                  
       render :new, status: :unprocessable_entity
     end
   end
@@ -38,13 +38,23 @@ class ActivitiesController < ApplicationController
     @activity = @event.activities.find(params[:id])
 
     if @activity.update(activity_params)
-      flash[:notice] = "Activity updated successfully!"   # ✅ redirect → flash
+      flash[:notice] = "Activity updated successfully!"   
       redirect_to event_path(@event)
     else
-      flash.now[:alert] = "Error in update. Try again"    # ✅ render → flash.now
+      flash.now[:alert] = "Error in update. Try again"    
       render :edit, status: :unprocessable_entity
     end
   end
+
+  def destroy
+    @event = Event.find(params[:event_id])
+    @activity = @event.activities.find(params[:id])
+    @activity.destroy
+
+    flash[:notice] = "Activity deleted successfully!"  
+    redirect_to event_path(@event)
+  end
+
 
   private
 
@@ -62,7 +72,7 @@ class ActivitiesController < ApplicationController
     allowed_roles = ["event_manager", "admin", "activity_owner"]
 
     unless allowed_roles.include?(current_user&.role)
-      flash[:alert] = "Access denied"   # ✅ redirect case → flash
+      flash[:alert] = "Access denied"  
       redirect_to root_path
     end
   end

@@ -72,3 +72,6 @@ gem "roo"
 
 gem "devise"
 gem "letter_opener", group: :development
+
+
+gem 'whenever', require: false

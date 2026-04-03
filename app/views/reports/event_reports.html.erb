@@ -1,0 +1,106 @@
+<div class="container mt-5">
+  <h2 class="text-center fw-bold mb-5">📊 Event Reports Dashboard</h2>
+   <div class="text-end">
+     <%= link_to "← Back", request.referer || root_path, class: "btn  btn-dark rounded-pill px-3" %>
+     </div>
+
+  <!-- ================= UPCOMING EVENTS ================= -->
+  <h4 class="mb-4 text-primary">Upcoming Events</h4>
+
+  <div class="row">
+    <% @upcoming_events.each do |event| %>
+
+      <% total_invited = event.guests.count %>
+      <% accepted = event.rsvps.where(status: "attending").count %>
+      <% declined = event.rsvps.where(status: "declined").count %>
+      <% pending = event.rsvps.where(status: "pending").count %>
+
+      <% response_rate = total_invited > 0 ? ((accepted + declined) * 100 / total_invited) : 0 %>
+
+      <div class="col-md-4 mb-4">
+        <div class="event-card">
+
+          <div class="event-header">
+            <h5><%= event.name %></h5>
+            <span>
+              <%= event.date.strftime("%B %d, %Y") %>, 
+              <%= event.start_time.strftime("%I:%M %p") %>
+            </span>
+          </div>
+
+          <div class="event-stats">
+            <div class="stat"><p>Total</p><h6><%= total_invited %></h6></div>
+            <div class="stat success"><p>Accepted</p><h6><%= accepted %></h6></div>
+            <div class="stat danger"><p>Declined</p><h6><%= declined %></h6></div>
+            <div class="stat warning"><p>Pending</p><h6><%= pending %></h6></div>
+          </div>
+
+          <div class="progress mt-3">
+            <div class="progress-bar" style="width: <%= response_rate %>%;">
+              <%= response_rate %>%
+            </div>
+          </div>
+
+          <div class="text-center mt-3">
+            <%= link_to "View Details", event_path(event), class: "view-btn" %>
+            <span class="status-badge upcoming">Upcoming</span>
+          </div>
+
+        </div>
+      </div>
+
+    <% end %>
+  </div>
+
+  <!-- ================= DIVIDER ================= -->
+  <hr class="my-5">
+
+  <!-- ================= COMPLETED EVENTS ================= -->
+  <h4 class="mb-4 text-secondary">Completed Events</h4>
+
+  <div class="row">
+    <% @completed_events.each do |event| %>
+
+      <% total_invited = event.guests.count %>
+      <% accepted = event.rsvps.where(status: "attending").count %>
+      <% declined = event.rsvps.where(status: "declined").count %>
+      <% pending = event.rsvps.where(status: "pending").count %>
+
+      <% response_rate = total_invited > 0 ? ((accepted + declined) * 100 / total_invited) : 0 %>
+
+      <div class="col-md-4 mb-4">
+        <div class="event-card completed-card">
+
+          <div class="event-header">
+            <h5><%= event.name %></h5>
+            <span>
+              <%= event.date.strftime("%B %d, %Y") %>, 
+              <%= event.start_time.strftime("%I:%M %p") %>
+            </span>
+          </div>
+
+          <div class="event-stats">
+            <div class="stat"><p>Total</p><h6><%= total_invited %></h6></div>
+            <div class="stat success"><p>Accepted</p><h6><%= accepted %></h6></div>
+            <div class="stat danger"><p>Declined</p><h6><%= declined %></h6></div>
+            <div class="stat warning"><p>Pending</p><h6><%= pending %></h6></div>
+          </div>
+
+          <div class="progress mt-3">
+            <div class="progress-bar bg-secondary" style="width: <%= response_rate %>%;">
+              <%= response_rate %>%
+            </div>
+          </div>
+
+          <div class="text-center mt-3">
+            <%= link_to "View Details", event_path(event), class: "view-btn" %>
+            <span class="status-badge completed">Completed</span>
+          </div>
+
+        </div>
+      </div>
+
+    <% end %>
+  </div>
+
+</div>

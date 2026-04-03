@@ -10,24 +10,24 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <% if current_user && current_user.role == "admin"%>
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/dashboard" style="color: #ffffff;">Home</a>
+          </li>
+        <% else %>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/" style="color: #ffffff;">Home</a>
         </li>
+          <%end%>
 
 
         <%# user info %>
          <% if user_signed_in? %>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #ffffff;">Welcome, <%= current_user.name %></a>
-        </li>
         
         <%# admin dashboard %>
          <% if current_user.role == "admin" %>
-         <li class="nav-item">
-            <a class="nav-link" href="/admin/dashboard" style="color: #ffffff;">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/employees/new" style="color: #ffffff;">Add Users</a>
+           <li class="nav-item">
+            <a class="nav-link" href="/admin/users" style="color: #ffffff;">Users</a>
           </li>
           <li class="nav-item">
           <a class="nav-link" href="/venues" style="color: #ffffff;">Venues</a>
@@ -35,6 +35,10 @@
          <%# events %>
         <li class="nav-item">
           <a class="nav-link" href="/events" style="color: #ffffff;">Events</a>
+        </li>
+
+         <li class="nav-item">
+          <a class="nav-link" href="/reports" style="color: #ffffff;">Reports</a>
         </li>
         <%# end%>
 

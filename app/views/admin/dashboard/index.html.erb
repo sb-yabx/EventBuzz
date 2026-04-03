@@ -1,139 +1,68 @@
-<div class="container mt-4">
-<div class="row">
+<div class="container py-5">
 
-    <h2 class="text-center mb-3">Admin Dashboard</h2>
+  <!-- HEADER -->
+  <div class="text-center mb-5">
+    <h2 class="fw-bold">Admin Dashboard</h2>
+    <p class="text-muted">Overview of platform statistics</p>
+  </div>
 
-<!-- LEFT SIDE : EMPLOYEES -->
-<div class="col-md-7">
+  <div class="row g-4">
 
-<div class="card shadow-sm">
-<div class="card-header bg-dark text-white">
-All Employees
-</div>
+    <!-- EVENT MANAGERS -->
+    <div class="col-md-3">
+      <div class="card border-0 shadow-lg rounded-4 text-center p-4 h-100">
+        <div class="mb-3">
+          <i class="bi bi-person-badge fs-1 text-info"></i>
+        </div>
+        <h6 class="text-muted">Event Managers</h6>
+        <h3 class="fw-bold">
+          <%= @users.count { |u| u.role == "event_manager" } %>
+        </h3>
+        <%= link_to "View All", show_event_managers_path, class: "btn btn-outline-info rounded-pill mt-3" %>
+      </div>
+    </div>
 
-<div class="card-body">
+    <!-- ACTIVITY OWNERS -->
+    <div class="col-md-3">
+      <div class="card border-0 shadow-lg rounded-4 text-center p-4 h-100">
+        <div class="mb-3">
+          <i class="bi bi-people fs-1 text-warning"></i>
+        </div>
+        <h6 class="text-muted">Activity Owners</h6>
+        <h3 class="fw-bold">
+          <%= @users.count { |u| u.role == "activity_owner" } %>
+        </h3>
+        <%= link_to "View All", show_activity_owners_path, class: "btn btn-outline-warning rounded-pill mt-3" %>
+      </div>
+    </div>
 
-<table class="table table-hover">
-<thead>
-<tr>
-<th>Name</th>
-<th>Email</th>
-<th>Role</th>
-<th>Actions</th>
-</tr>
-</thead>
+    <!-- EVENTS -->
+    <div class="col-md-3">
+      <div class="card border-0 shadow-lg rounded-4 text-center p-4 h-100">
+        <div class="mb-3">
+          <i class="bi bi-calendar-event fs-1 text-dark"></i>
+        </div>
+        <h6 class="text-muted">Events</h6>
+        <h3 class="fw-bold">
+          <%= @events.count %>
+        </h3>
+        <%= link_to "View All", events_path, class: "btn btn-outline-dark rounded-pill mt-3" %>
+      </div>
+    </div>
 
-<tbody>
+    <!-- VENUES -->
+    <div class="col-md-3">
+      <div class="card border-0 shadow-lg rounded-4 text-center p-4 h-100">
+        <div class="mb-3">
+          <i class="bi bi-geo-alt fs-1 text-danger"></i>
+        </div>
+        <h6 class="text-muted">Venues</h6>
+        <h3 class="fw-bold">
+          <%= @venues.count %>
+        </h3>
+        <%= link_to "View All", venues_path, class: "btn btn-outline-danger rounded-pill mt-3" %>
+      </div>
+    </div>
 
-<% @users.each do |user| %>
-<% if ["event_manager","activity_owner"].include?(user.role) %>
-
-<tr>
-<td><%= user.name %></td>
-<td><%= user.email %></td>
-<td><%= user.role.humanize %></td>
-
-<td>
-
-<%= link_to "Show" , admin_employee_path(user), class:"btn btn-outline-primary btn-sm"%>
-<%= link_to "Remove" , admin_employee_path(user), method: :delete ,class:"btn btn-outline-primary btn-sm"%>
-</td>
-
-</tr>
-
-<% end %>
-<% end %>
-
-</tbody>
-</table>
-
-</div>
-</div>
-
-</div>
-
-
-<!-- RIGHT SIDE -->
-<div class="col-md-5">
-
-<!-- EVENT MANAGERS CARD -->
-<div class="card shadow-sm mb-4">
-
-<div class="card-header bg-info text-white">
-Event Managers
-</div>
-
-<div class="card-body text-center">
-
-<p class="mb-3">
-Total: <%= @users.count{|u| u.role == "event_manager"} %>
-</p>
-
-<%= link_to "Show all", show_event_managers_path , class: "btn btn primary"%>
-
-</div>
-
-</div>
-
-
-<!-- ACTIVITY OWNERS CARD -->
-<div class="card shadow-sm">
-
-<div class="card-header bg-warning text-white">
-Activity Owners
-</div>
-
-<div class="card-body text-center">
-
-<p class="mb-3">
-Total: <%= @users.count{|u| u.role == "activity_owner"} %>
-</p>
-
-<%= link_to "Show all", show_activity_owners_path, class: "btn btn-warning" %>
-
-</div>
-
-</div>
-<br>
-
-<!-- Events CARD -->
-<div class="card shadow-sm">
-
-<div class="card-header bg-dark text-white">
-Events
-</div>
-
-<div class="card-body text-center">
-
-<p class="mb-3">
-Total: <%= @users.count{|u| u.role == "activity_owner"} %>
-</p>
-<%= link_to "Show all", events_path, class: "btn btn-dark"%>
-
-</div>
-
-</div>
-<br>
-
-<!-- Venue CARD -->
-<div class="card shadow-sm">
-
-<div class="card-header bg-danger text-white">
-Venues
-</div>
-
-<div class="card-body text-center">
-
-<p class="mb-3">
-Total: <%= @venues.count %>
-</p>
-
-<%= link_to "Show all", venues_path, class: "btn btn-primary" %>
-</div>
-
-</div>
-
-</div>
-
-</div>
+  </div>
 </div>

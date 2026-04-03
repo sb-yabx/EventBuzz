@@ -1,4 +1,25 @@
-// Entry point for the build script in your package.json
+// Entry point
+console.log("Hello from app/javascript/application.js!");
+
 import "@hotwired/turbo-rails"
 import "./controllers"
 import * as bootstrap from "bootstrap"
+
+// import functions
+import { showFlash } from "./flash"
+import { initFormToggle } from "./form_toggle"
+
+// import files that attach to window
+import "./email_modal"
+import "./guest_toggle"
+
+// run on page load
+document.addEventListener("turbo:render", () => {
+  showFlash();
+  initFormToggle();
+});
+
+document.addEventListener("turbo:load", () => {
+  showFlash();
+  initFormToggle();
+});

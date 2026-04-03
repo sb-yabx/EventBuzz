@@ -5,6 +5,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @venues = Venue.all
   end
 
   def create
@@ -12,7 +13,7 @@ class EventsController < ApplicationController
     if @event.save
       redirect_to events_path, notice: "Created Successfully"
     else
-      render :new, alert: "Try again"
+      render :new,status: :unprocessable_entity
     end
   end
 
@@ -35,7 +36,7 @@ class EventsController < ApplicationController
     if @event.update(event_params)
       redirect_to event_path(@event), notice: "Event updated successfully!"
     else
-      render :edit, alert: "Error. Try again"
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -92,6 +93,7 @@ class EventsController < ApplicationController
     user = User.find_by(email: email)
 
     if user
+      guest.update(user_id: user.id)
       Rsvp.find_or_create_by(
         user_id: user.id,
         event_id: @event.id
@@ -108,6 +110,42 @@ class EventsController < ApplicationController
 end
 
 
+# send custom email to guests
+  def send_custom_email
+  @event = Event.find(params[:id])
+
+  subject = params[:subject]
+  message = params[:message]
+
+  guests = []   # ✅ default safe
+
+  case params[:target]
+  when "all"
+    guests = @event.guests
+
+  when "pending"
+    guests = @event.guests.joins(:rsvp)
+                 .where(rsvps: { status: "pending" })
+
+  when "attending"
+    guests = @event.guests.joins(:rsvp)
+                 .where(rsvps: { status: "attending" })
+
+  when "individual"
+    if params[:guest_id].present?
+      guests = Guest.where(id: params[:guest_id])
+    end
+  end
+
+  guests.each do |guest|
+    EventMailer.custom_email(guest, subject, message, @event).deliver_later
+  end
+
+  redirect_to event_path(@event), notice: "Emails sent!"
+end
+
+
+
 
   private
   def event_params
@@ -117,7 +155,8 @@ end
     :start_time, 
     :end_time, 
     :event_manager_id, 
-    :venue_id)
+    :venue_id, 
+    :capacity)
   end
 
   def is_event_manager

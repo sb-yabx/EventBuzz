@@ -1,26 +1,57 @@
-<div class="form-container">
-    <h2 class="form-title">Create Employee Account</h2>
+<div class="container py-5">
 
-<%= form_with model: [:admin,@user], url: admin_employees_path, local: true do |f| %>
-  <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: "form-control" %>
+  <!-- TOP BAR -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold mb-0">Create Employee</h3>
+
+    <%= link_to "← Back", request.referer || venues_path,
+      class: "btn btn-outline-dark rounded-pill px-4" %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :email %>
-    <%= f.email_field :email, class: "form-control" %>
-  </div>
+  <div class="row justify-content-center">
 
-  <div class="form-group">
-    <%= f.label :role %>
-    <%= f.select :role, User.roles.keys.map { |r| [r.humanize, r] }, class: "form-control" %>
-  </div>
+    <!-- CENTERED FORM -->
+    <div class="col-md-6 col-lg-5">
 
-    <div class="form-group">
-        <%= f.submit "Create Employee", class: "btn btn-primary" %>
+      <div class="card border-0 shadow-lg rounded-4 p-4">
+
+        <h5 class="text-center mb-4 fw-semibold">Create Employee Account</h5>
+
+        <%= form_with model: [:admin, @user], url: admin_employees_path, local: true do |f| %>
+
+          <!-- NAME -->
+          <div class="mb-3">
+            <%= f.label :name, class: "form-label fw-semibold" %>
+            <%= f.text_field :name, class: "form-control rounded-pill", placeholder: "Enter name" %>
+          </div>
+
+          <!-- EMAIL -->
+          <div class="mb-3">
+            <%= f.label :email, class: "form-label fw-semibold" %>
+            <%= f.email_field :email, class: "form-control rounded-pill", placeholder: "Enter email" %>
+          </div>
+
+          <!-- ROLE -->
+          <div class="mb-4">
+            <%= f.label :role, class: "form-label fw-semibold" %>
+            <%= f.select :role,
+              User.roles.keys.map { |r| [r.humanize, r] },
+              {},
+              class: "form-select rounded-pill" %>
+          </div>
+
+          <!-- SUBMIT -->
+          <div class="d-grid">
+            <%= f.submit "Create Employee",
+              class: "btn btn-success rounded-pill py-2 shadow-sm" %>
+          </div>
+
+        <% end %>
+
+      </div>
+
     </div>
 
-<% end %>
+  </div>
 
 </div>

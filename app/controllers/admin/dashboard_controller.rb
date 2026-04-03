@@ -1,11 +1,21 @@
 class Admin::DashboardController < ApplicationController
   before_action :authenticate_user!
   before_action :require_admin
+
   def index
     # This action will render app/views/admin/dashboard/index.html.erb by default
     @users = User.where(role: [:event_manager, :activity_owner])
     @venues = Venue.all 
+    @events = Event.all
+    @activities = Activity.all
+    @rsvps = Rsvp.all
   end
+
+  def all_users
+    @users = User.where(role: [:event_manager, :activity_owner])
+  end
+
+
 
 
   private 

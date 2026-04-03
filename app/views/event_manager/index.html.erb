@@ -58,8 +58,14 @@
             <%= link_to "Edit",
                   edit_event_path(event),
                   class: "btn btn-outline-dark btn-sm rounded-pill px-3" %>
+                  <% elsif event.date == Date.today %>
+                  <span class="status-badge today">
+                    🔥 Today
+                  </span>
                   <% else %>
-                  <button class="btn btn-dark btn-sm px-3" disabled> Event Completed</button>
+                  <span class="status-badge today">
+                    ✔  Completed
+                  </span>
             <%end%>
 
           </div>

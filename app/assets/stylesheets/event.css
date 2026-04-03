@@ -35,3 +35,166 @@
   margin-bottom: 10px;
   font-size: 14px;
 }
+
+.event-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* Header */
+.event-header h5 {
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.event-header span {
+  font-size: 14px;
+  color: gray;
+}
+
+/* Stats Grid */
+.event-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.stat {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.stat h6 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.stat p {
+  margin: 0;
+  font-size: 12px;
+  color: gray;
+}
+
+/* Colors */
+.stat.success {
+  background: #e6f9f0;
+  color: #28a745;
+}
+
+.stat.danger {
+  background: #fdeaea;
+  color: #dc3545;
+}
+
+.stat.warning {
+  background: #fff6e5;
+  color: #ffc107;
+}
+
+/* Progress */
+.progress {
+  height: 8px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #000, #444);
+  font-size: 10px;
+}
+
+/* Button */
+.view-btn {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 20px;
+  background: black;
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.view-btn:hover {
+  background: #333;
+}
+
+.status-badge {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Different states */
+.status-badge.completed {
+  background: #fdeaea;
+  color: #dc3545;
+}
+
+.status-badge.today {
+  background: #e6f0ff;
+  color: #0d6efd;
+}
+
+.status-badge.upcoming {
+  background: #e6f9f0;
+  color: #28a745;
+}
+
+
+
+.stat-card {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.stat-card h3 {
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.stat-card small {
+  color: gray;
+}
+
+/* Colors */
+.stat-card.success {
+  background: #e6f9f0;
+  color: #28a745;
+}
+
+.stat-card.danger {
+  background: #fdeaea;
+  color: #dc3545;
+}
+
+.stat-card.warning {
+  background: #fff6e5;
+  color: #ffc107;
+}
+
+/* Progress */
+.progress {
+  height: 10px;
+  border-radius: 10px;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, black, gray);
+}

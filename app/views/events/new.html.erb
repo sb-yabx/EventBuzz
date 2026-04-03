@@ -1,3 +1,14 @@
+<% if @event.errors.any? %>
+  <div class="alert alert-danger">
+    <ul class="mb-0">
+      <% @event.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
 <div class="container mt-5">
 
 <div class="row justify-content-center">
@@ -26,9 +37,19 @@
       class:"form-select"%>
 </div>
 
-<div class="mb-3">
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
 <%= f.label :date, "Event date",class:"form-label" %>
 <%= f.date_field :date, class:"form-control" , required: true %>
+</div>
+
+<div class="col-md-6 mb-3">
+<%= f.label :capacity, "Capacity", class:"form-label" %>
+<%= f.number_field :capacity, class:"form-control", min: 0%>
+</div>
+
 </div>
 
 <div class="row">

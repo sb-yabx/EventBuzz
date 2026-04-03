@@ -1,0 +1,128 @@
+<div class="container mt-5">
+
+  <h2 class="text-center mb-5">📊 Overall RSVP Statistics</h2>
+   <div class="text-end">
+     <%= link_to "← Back", request.referer || root_path, class: "btn  btn-dark rounded-pill px-3" %>
+     </div>
+
+  <!-- TOP CARDS -->
+  <div class="row text-center">
+
+    <div class="col-md-3">
+      <div class="stat-card">
+        <h6>Total Invitations</h6>
+        <h3><%= @total_invited %></h3>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="stat-card success">
+        <h6>Accepted</h6>
+        <h3><%= @accepted %></h3>
+        <small><%= @accepted_percent %>%</small>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="stat-card danger">
+        <h6>Declined</h6>
+        <h3><%= @declined %></h3>
+        <small><%= @declined_percent %>%</small>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="stat-card warning">
+        <h6>Pending</h6>
+        <h3><%= @pending %></h3>
+        <small><%= @pending_percent %>%</small>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RESPONSE RATE -->
+  <div class="mt-5">
+    <h5 class="text-center">Response Rate: <strong><%= @response_rate %>%</strong></h5>
+
+    <div class="progress mt-3">
+      <div class="progress-bar" style="width: <%= @response_rate %>%;">
+      </div>
+    </div>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="mt-5">
+    <h4>Insights</h4>
+    <ul>
+      <li>
+        <% if @response_rate > 70 %>
+          High overall engagement across events
+        <% else %>
+          Low engagement — improve invitation strategy
+        <% end %>
+      </li>
+
+      <li>
+        <% if @pending > 0 %>
+          <%= @pending %> guests have not responded yet
+        <% else %>
+          All guests have responded
+        <% end %>
+      </li>
+
+      <li>
+        Expected total attendance across events: <strong><%= @accepted %></strong>
+      </li>
+    </ul>
+  </div>
+<hr>
+<%# upcoming event %>
+  <div class="mt-5">
+    <h4>Upcoming Events</h4>
+    <div class="row">
+      <% @upcoming_events.each do |event| %>
+        <div class="col-md-4 mb-4">
+          <div class="event-card">
+
+            <!-- Top Section -->
+            <div class="event-header">
+              <h5><%= event.name %></h5>
+              <span><%= event.date.strftime("%B %d, %Y")%>, <%= event.start_time.strftime("%I:%M %p") %></span>
+            </div>
+
+            <!-- Button -->
+            <div class="text-center mt-3">
+              <%= link_to "RSVP", event_rsvps_path(event), class: "view-btn" %>
+            </div>
+
+          </div>
+        </div>
+      <% end %>
+</div>
+<hr>
+<%# completed events %>
+  <div class="mt-5">
+    <h4>Completed Events</h4>
+     <div class="row">
+      <% @completed_events.each do |event| %>
+        <div class="col-md-4 mb-4">
+          <div class="event-card">
+
+            <!-- Top Section -->
+            <div class="event-header">
+              <h5><%= event.name %></h5>
+              <span><%= event.date.strftime("%B %d, %Y")%>, <%= event.start_time.strftime("%I:%M %p") %></span>
+            </div>
+
+            <!-- Button -->
+            <div class="text-center mt-3">
+              <%= link_to "RSVP", event_rsvps_path(event), class: "view-btn" %>
+            </div>
+
+          </div>
+        </div>
+      <% end %>
+      </div>
+    
+</div>

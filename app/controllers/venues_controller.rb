@@ -25,12 +25,26 @@ class VenuesController < ApplicationController
     @events = Event.where(venue_id: @venue)
   end
 
+  def edit
+    @venue = Venue.find(params[:id])
+  end
+
+  def update
+    @venue = Venue.find(params[:id])
+    if @venue.update(venue_params)
+      redirect_to @venue, notice: 'Venue was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+
 
 
   private
 
   def venue_params
-    params.require(:venue).permit(:name, :address, :capacity)
+    params.require(:venue).permit(:name, :address, :capacity,:facilities, :contact)
   end
 
 

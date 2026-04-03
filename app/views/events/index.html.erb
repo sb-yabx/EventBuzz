@@ -1,84 +1,138 @@
-<div class="container mt-5">
+<div class="container py-5">
 
+  <!-- HEADER -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold">All Events</h2>
-  <div class="d-flex gap-2">
-     <%= link_to "← Back", request.referer || root_path, class: "btn bg-dark btn-dark rounded-pill px-3" %>
-    <%= link_to "Add New Event", new_event_path, class: "btn btn-success" %>
-     </div>
-  </div>
-
-  <div class="card shadow-sm">
-
-    <div class="card-header bg-dark text-white">
-      Event List
+    <div>
+      <h2 class="fw-bold mb-0">All Events</h2>
+      <small class="text-muted">Manage and track all your events</small>
     </div>
 
-    <div class="card-body">
+    <div class="d-flex gap-2">
+      <%= link_to "← Back", request.referer || root_path,
+          class: "btn btn-outline-secondary rounded-pill px-3" %>
+
+      <%= link_to "＋ Add Event", new_event_path,
+          class: "btn btn-success rounded-pill px-4 fw-semibold shadow-sm" %>
+    </div>
+  </div>
+
+  <!-- CARD -->
+  <div class="card border-0 shadow-lg rounded-4">
+
+    <div class="card-header bg-dark text-white rounded-top-4 d-flex justify-content-between align-items-center">
+      <span class="fw-semibold">Event List</span>
+      <span class="badge bg-light text-dark"><%= @events.count %> Events</span>
+    </div>
+
+    <div class="card-body p-4">
 
       <% if @events.any? %>
 
-      <table class="table table-hover table-striped align-middle">
+      <div class="table-responsive">
+        <table class="table align-middle table-hover">
 
-        <thead class="table-light">
-          <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Event Manager</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+          <thead class="table-light">
+            <tr class="text-secondary small text-uppercase">
+              <th>Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Manager</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
 
-        <tbody>
+          <tbody>
 
-        <% @events.each do |event| %>
-          <tr>
+          <% @events.each do |event| %>
+            <tr>
 
-            <td>
-              <strong><%= event.name %></strong>
-            </td>
+              <!-- NAME -->
+              <td>
+                <strong class="text-dark"><%= event.name %></strong>
+              </td>
 
-            <td>
-              <%= event.date %>
-            </td>
-             <td>
-              <%= event.event_manager.name %>
-            </td>
-             
+              <!-- DATE -->
+              <td>
+                <span class="badge bg-light text-dark px-3 py-2 rounded-pill">
+                  <%= event.date.to_date.strftime("%d %b %Y") %>
+                </span>
+              </td>
 
-            <td>
-               <% if event.date < Date.today%>
-                <%= link_to "Show", event_path(event), class: "btn btn-sm btn-outline-warning" %>
-                <button class="btn btn-sm btn-dark" disabled>Event done</button>
-               <%else%>
-               <%= link_to "Edit", edit_event_path(event), class: "btn btn-sm btn-outline-warning" %>
-              
+              <!-- TIME -->
+              <td>
+                <span class="text-muted">
+                  <%= event.start_time.strftime("%I:%M %p") %>
+                </span>
+              </td>
 
-              <%= link_to "Delete", event_path(event),
-                  method: :delete,
-                  data: { confirm: "Are you sure?" },
-                  class: "btn btn-sm btn-outline-danger" %>
-               <%end%>
-             
-             
-            </td>
+              <!-- MANAGER -->
+              <td>
+                <span class="fw-medium"><%= event.event_manager.name %></span>
+              </td>
 
-          </tr>
-        <% end %>
+              <!-- ACTIONS -->
+              <td class="text-end">
 
-        </tbody>
+  <div class="d-inline-flex gap-2">
 
-      </table>
+    <!-- View -->
+    <%= link_to event_path(event),
+        class: "btn btn-sm btn-light border rounded-pill px-3 d-flex align-items-center gap-1" do %>
+      <i class="bi bi-eye"></i> View
+    <% end %>
 
+   <% if event.date < Date.today %>
+
+  <span class="status-badge completed">
+    ✔ Completed
+  </span>
+
+<% elsif event.date == Date.today %>
+
+  <span class="status-badge today">
+    🔥 Today
+  </span>
+
+
+    <% else %>
+
+      <!-- Edit -->
+      <%= link_to edit_event_path(event),
+          class: "btn btn-sm btn-primary rounded-pill px-3 d-flex align-items-center gap-1 shadow-sm" do %>
+        <i class="bi bi-pencil"></i> Edit
+      <% end %>
+
+      <!-- Delete -->
+      <%= link_to event_path(event),
+          method: :delete,
+          data: { confirm: "Are you sure?" },
+          class: "btn btn-sm btn-danger rounded-pill px-3 d-flex align-items-center gap-1 shadow-sm" do %>
+        <i class="bi bi-trash"></i> Delete
+      <% end %>
+
+    <% end %>
+
+  </div>
+
+</td>
+
+            </tr>
+          <% end %>
+
+          </tbody>
+
+        </table>
+      </div>
 
       <% else %>
 
-      <p class="text-center text-muted">No venues found.</p>
+        <div class="text-center py-5">
+          <i class="bi bi-calendar-x fs-1 text-muted"></i>
+          <p class="text-muted mt-3">No events found</p>
+        </div>
 
       <% end %>
 
     </div>
-
-
   </div>
 </div>

@@ -74,7 +74,6 @@ class RsvpsController < ApplicationController
 
 
 
-
   private
   def rsvp_params
     params.require(:rsvp).permit(:status,

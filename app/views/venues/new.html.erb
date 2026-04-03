@@ -29,6 +29,16 @@
 <%= f.number_field :capacity, class:"form-control", placeholder:"Enter seating capacity" %>
 </div>
 
+<div class="mb-3">
+<%= f.label :facilities, class:"form-label" %>
+<%= f.text_area :facilities, class:"form-control", placeholder:"Enter facilities available" %>
+</div>
+
+<div class="mb-3">
+<%= f.label :contact, class:"form-label" %>
+<%= f.number_field :contact, class:"form-control", placeholder:"Enter contact number" %>
+</div>
+
 <div class="d-grid">
 <%= f.submit "Create Venue", class:"btn btn-primary btn-lg" %>
 </div>
@@ -38,7 +48,7 @@
 </div>
 
 </div>
-<br>
+
 <div class="text-center mt-3">
   <%= link_to "Show all venues", venues_path, class: "btn btn-primary" %>
 </div>

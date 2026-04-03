@@ -26,53 +26,7 @@
 
     <div id="flash-data" data-flash='<%= flash.to_hash.to_json %>'></div>
 
-<script>
-function showFlash() {
-  const el = document.getElementById("flash-data");
-  if (!el) return;
-
-  const flash = JSON.parse(el.dataset.flash || "{}");
-  if (Object.keys(flash).length === 0) return;
-
-  if (el.dataset.shown) return; 
-
-  Object.entries(flash).forEach(([type, message]) => {
-    Swal.fire({
-      toast: true,
-      position: 'top',
-      icon: type === "notice" ? "success" : "error",
-      title: message,
-      showConfirmButton: false,
-      timer: 3000
-    });
-  });
-
-  el.dataset.shown = "true";
-}
-
-
-document.addEventListener("DOMContentLoaded", showFlash);
-document.addEventListener("turbo:render", showFlash);
-</script>
-
-<script>
-  document.addEventListener("turbo:load", function () {
-  const emailInput = document.getElementById("emails_input");
-  const excelInput = document.getElementById("excel_input");
-
-  if (!emailInput || !excelInput) return;
-
-  emailInput.addEventListener("input", function () {
-    excelInput.disabled = emailInput.value.trim().length > 0;
-  });
-
-  excelInput.addEventListener("change", function () {
-    emailInput.disabled = excelInput.files.length > 0;
-  });
-});
-</script>
-
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     
 

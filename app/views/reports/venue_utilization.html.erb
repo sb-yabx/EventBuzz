@@ -1,0 +1,74 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-5">🏢 Venue Utilization Report</h2>
+   <div class="text-end">
+     <%= link_to "← Back", request.referer || root_path, class: "btn  btn-dark rounded-pill px-3" %>
+     </div>
+  <h4><%= @venues.count %> Venues</h4>
+
+  
+
+  <% @venues.each do |venue| %>
+  <%= link_to venue_path(venue), class:"text-decoration-none" do %>
+
+    <div class="venue-card mb-5">
+
+      <!-- Venue Header -->
+      <div class="venue-header">
+        <h4><%= venue.name %></h4>
+        <span>Capacity: <%= venue.capacity %></span>
+      </div>
+
+      <% if venue.events.any? %>
+
+        <table class="table mt-3">
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Date</th>
+              <th>Invited</th>
+               <th>Accepted</th>
+              <th>Utilization</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% venue.events.order(:date).each do |event| %>
+
+              <% accepted = event.rsvps.where(status: "attending").count %>
+              <% invited = event.rsvps.count %>
+              <% capacity = venue.capacity || 1 %>
+              <% utilization = (accepted * 100 / capacity) %>
+
+              <tr>
+                <td><%= event.name %></td>
+                <td><%= event.date.strftime("%B %d, %Y") %></td>
+                 <td><%= invited %></td>
+                <td><%= accepted %></td>
+
+                <td>
+                  <div class="progress">
+                    <div class="progress-bar 
+                      <%= 'bg-danger' if utilization > 100 %>
+                      <%= 'bg-success' if utilization.between?(60, 100) %>
+                      <%= 'bg-warning' if utilization < 60 %>"
+                      style="width: <%= utilization %>%;">
+                      <%= utilization %>%
+                    </div>
+                  </div>
+                </td>
+
+              </tr>
+
+            <% end %>
+          </tbody>
+        </table>
+
+      <% else %>
+        <p class="text-muted mt-3">No events held in this venue</p>
+      <% end %>
+
+    </div>
+    <% end %>
+
+  <% end %>
+</div>

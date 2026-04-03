@@ -45,10 +45,9 @@
     <% if current_user && (current_user == @activity.user || current_user.id == @activity.event.event_manager_id) %>
       <div class="activity-actions">
         <%= link_to "Edit", edit_event_activity_path(@activity.event, @activity), class: "btn-edit" %>
-        <%= link_to "Delete", event_activity_path(@activity.event, @activity),
-              method: :delete,
-              data: { confirm: "Are you sure?" },
-              class: "btn-delete" %>
+       <%= link_to "Delete", event_activity_path(@activity.event, @activity),
+    data: { turbo_method: :delete, turbo_confirm: "Are you sure? You want to delete this activity?" },
+    class: "btn-delete" %>
       </div>
     <% end %>
 

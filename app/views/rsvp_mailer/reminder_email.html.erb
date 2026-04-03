@@ -1,0 +1,11 @@
+<h2>Reminder for <%= @event.name %></h2>
+
+<p>Hello <%= @user.name %>,</p>
+
+<p>You haven’t responded to the event yet.</p>
+
+<p>Please RSVP before: <%= @event.date&.strftime("%d %b %Y") %></p>
+
+<%= link_to "Respond Now", new_event_rsvp_url(@event) %>
+
+<p>Thank you!</p>

@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-  sessions: 'users/sessions'
+  sessions: 'users/sessions',
+  registrations: 'users/registrations'
 }
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -19,8 +21,8 @@ Rails.application.routes.draw do
   resources :venues
 
   resources :events do
-    resources :activities
-    
+    resources :activities , only: [:show, :new, :create, :edit, :update, :destroy] do
+    end
     resources :rsvps, only: [:new, :create, :index] do
     collection do
       get :special_requests
@@ -55,4 +57,18 @@ Rails.application.routes.draw do
   get "/myevents/:id", to: "event_manager#index", as: :index_event_manager
   get "/myActivities/:id", to: "activity_owner#index", as: :index_activity_manager
 
+  get "/admin/users", to: "admin/dashboard#all_users", as: :admin_all_users
+
+  get "/reports", to: "reports#index", as: :reports
+  get "/reports/event_reports", to: "reports#event_reports", as: :event_reports
+  get "/reports/rsvp_statistics", to: "reports#rsvp_statistics", as: :rsvp_statistics
+  get "/reports/guest_preferences", to: "reports#guest_preferences", as: :guest_preferences
+  get "/reports/venue_utilization", to: "reports#venue_utilization", as: :venue_utilization
+
+
+  post '/events/:id/send_custom_email', to: 'events#send_custom_email', as: 'send_custom_email'
+
+
 end
+
+

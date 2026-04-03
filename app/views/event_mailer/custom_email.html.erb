@@ -1,0 +1,12 @@
+<p>Hello <%= @guest.user&.name || "Guest" %>,</p>
+
+<p><%= @message %></p>
+
+<br>
+
+<p><strong>Event: <%= @event&.name %></strong></p>
+<p><strong>Date:</strong> <%= @event.date.strftime("%B %d, %Y") %></p>
+
+
+<p>Thank you!</p>
+<p>EventBuzz Team</p>
