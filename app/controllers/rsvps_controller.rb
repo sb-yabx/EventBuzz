@@ -74,6 +74,59 @@ class RsvpsController < ApplicationController
 
 
 
+  def download_pdf
+  @event = Event.find(params[:event_id])
+
+  @rsvps = @event.rsvps.includes(:user)
+
+  if params[:status].present?
+    @rsvps = @rsvps.where(status: params[:status])
+  end
+
+  if params[:parking].present?
+    @rsvps = @rsvps.where(need_parking: params[:parking] == "true")
+  end
+
+  if params[:accommodation].present?
+    @rsvps = @rsvps.where(need_accommodation: params[:accommodation] == "true")
+  end
+
+  if params[:diet].present?
+    @rsvps = @rsvps.where(dietary_preference: params[:diet])
+  end
+
+  pdf = Prawn::Document.new
+
+  pdf.text "RSVP Report - #{@event.name}", size: 18, style: :bold
+  pdf.move_down 10
+  pdf.text "Date: #{@event.date.strftime("%B %d, %Y")}"
+  pdf.move_down 20
+
+  # Table Data
+  table_data = [["S.No.","Name", "Email", "Status", "Diet", "Seating", "Parking", "Accommodation"]]
+
+  @rsvps.each_with_index do |rsvp, index|
+    table_data << [
+      index+1,
+      rsvp.user&.name || "Guest",
+      rsvp.user&.email,
+      rsvp.status,
+      rsvp.dietary_preference,
+      rsvp.seating_preference,
+      rsvp.need_parking ? "Yes" : "No",
+      rsvp.need_accommodation ? "Yes" : "No"
+    ]
+  end
+
+  pdf.table(table_data, header: true)
+
+  send_data pdf.render,
+            filename: "rsvp_report.pdf",
+            type: "application/pdf",
+            disposition: "attachment"
+end
+
+
   private
   def rsvp_params
     params.require(:rsvp).permit(:status,

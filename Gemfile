@@ -73,5 +73,10 @@ gem "roo"
 gem "devise"
 gem "letter_opener", group: :development
 
+# for scheduling background jobs
+gem 'whenever', require: false 
 
-gem 'whenever', require: false
+
+# for pdf download
+gem 'prawn'
+gem 'prawn-table'

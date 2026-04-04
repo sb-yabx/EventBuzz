@@ -1,0 +1,105 @@
+<div class="filter-bar mb-4">
+  <%= form_with url: event_rsvps_path(@event), method: :get, local: true do %>
+
+    <div class="row g-3 align-items-end">
+
+      <!-- STATUS -->
+      <div class="col-md-2">
+        <label class="filter-label">Status</label>
+        <%= select_tag :status,
+          options_for_select(
+            [["All", ""]] + Rsvp.statuses.keys.map { |k| [k.humanize, k] },
+            params[:status]
+          ),
+          class: "form-select" %>
+      </div>
+
+      <!-- PARKING -->
+      <div class="col-md-2">
+        <label class="filter-label">Parking</label>
+        <%= select_tag :parking,
+          options_for_select([["All", ""], ["Yes", "true"], ["No", "false"]], params[:parking]),
+          class: "form-select" %>
+      </div>
+
+      <!-- ACCOMMODATION -->
+      <div class="col-md-2">
+        <label class="filter-label">Accommodation</label>
+        <%= select_tag :accommodation,
+          options_for_select([["All", ""], ["Yes", "true"], ["No", "false"]], params[:accommodation]),
+          class: "form-select" %>
+      </div>
+
+      <!-- DIET -->
+      <div class="col-md-2">
+        <label class="filter-label">Diet</label>
+        <%= select_tag :diet,
+          options_for_select(
+            [["All", ""]] + Rsvp.dietary_preferences.keys.map { |k| [k.humanize, k] },
+            params[:diet]
+          ),
+          class: "form-select" %>
+      </div>
+
+      <!-- BUTTONS -->
+     <div class="col-md-4 d-flex gap-2">
+  <%= submit_tag "Filter", class: "btn btn-dark w-40" %>
+  <%= link_to "Reset", event_rsvps_path(@event), class: "btn btn-outline-secondary w-40" %>
+   <%= link_to "Download PDF",
+      download_pdf_event_rsvps_path(@event, request.query_parameters),
+      class: "btn btn-outline-secondary w-40" %>
+</div>
+
+
+    </div>
+
+  <% end %>
+</div>
+
+
+
+
+  <table class="rsvp-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Diet</th>
+        <th>Seating</th>
+        <th>Parking</th>
+        <th>Accommodation</th>
+       
+      </tr>
+    </thead>
+
+    <tbody>
+        <% if @rsvps.any? %>
+      <% @rsvps.each do |rsvp| %>
+        <tr>
+          <td><%= rsvp.user&.name || "Guest" %></td>
+          <td><%= rsvp.user&.email %></td>
+          <td>
+            <span class="status <%= rsvp.status.downcase.gsub(" ", "-") %>">
+              <%= rsvp.status %>
+            </span>
+          </td>
+          <td><%= rsvp.dietary_preference %></td>
+          <td><%= rsvp.seating_preference %></td>
+          <td><%= rsvp.need_parking ? "Yes" : "No" %></td>
+          <td><%= rsvp.need_accommodation ? "Yes" : "No" %></td>
+         
+          
+        </tr>
+      <% end %>
+      <% else%>
+      <tr>
+      <td colspan="7" class="text-center text-muted py-4">
+        🚫 No RSVPs found for selected filters
+      </td>
+    </tr>
+      <%end%>
+    </tbody>
+  </table>
+
+</div>

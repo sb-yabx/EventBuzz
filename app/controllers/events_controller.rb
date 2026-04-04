@@ -117,31 +117,29 @@ end
   subject = params[:subject]
   message = params[:message]
 
-  guests = []   # ✅ default safe
+  guests = []  
 
   case params[:target]
   when "all"
     guests = @event.guests
 
   when "pending"
-    guests = @event.guests.joins(:rsvp)
+    guests = @event.guests.joins(user: :rsvps)
                  .where(rsvps: { status: "pending" })
 
   when "attending"
-    guests = @event.guests.joins(:rsvp)
+    guests = @event.guests.joins(user: :rsvps)
                  .where(rsvps: { status: "attending" })
 
   when "individual"
-    if params[:guest_id].present?
-      guests = Guest.where(id: params[:guest_id])
-    end
+    guests = @event.guests.where(id: params[:guest_ids])
   end
 
   guests.each do |guest|
     EventMailer.custom_email(guest, subject, message, @event).deliver_later
   end
 
-  redirect_to event_path(@event), notice: "Emails sent!"
+  redirect_to event_rsvps_path(@event), notice: "Emails sent!"
 end
 
 
