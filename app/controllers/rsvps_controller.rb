@@ -58,22 +58,28 @@ class RsvpsController < ApplicationController
     end
   end
 
+  # dashboard for event manager to see all the rsvps for their events
   def dashboard
-    @events = Event.where(event_manager_id: params[:id]).order(Arel.sql("date < current_date, date ASC"))
+    @events = Event.where(event_manager_id: params[:id])
+    @upcoming_events = @events.where("date >= ?", Date.today)
+    @past_events = @events.where("date < ?", Date.today)
   end
+
+  # special requests for the event
 
   def special_requests
     @event = Event.find(params[:event_id])
     @rsvps = @event.rsvps.where.not(special_request: [nil, ""])
   end
 
+  # show all the invited guests for the event
   def invitesSend
     @event = Event.find(params[:id])
     @guests = @event.guests.all
   end
 
 
-
+# download rsvp report pdf
   def download_pdf
   @event = Event.find(params[:event_id])
 
@@ -102,7 +108,6 @@ class RsvpsController < ApplicationController
   pdf.text "Date: #{@event.date.strftime("%B %d, %Y")}"
   pdf.move_down 20
 
-  # Table Data
   table_data = [["S.No.","Name", "Email", "Status", "Diet", "Seating", "Parking", "Accommodation"]]
 
   @rsvps.each_with_index do |rsvp, index|
@@ -125,6 +130,33 @@ class RsvpsController < ApplicationController
             type: "application/pdf",
             disposition: "attachment"
 end
+
+
+# downlaod special request pdf
+def download_pdf_special_requests
+  @event = Event.find(params[:event_id])
+  @rsvps = @event.rsvps.where.not(special_request: [nil, ""])
+  pdf = Prawn::Document.new
+  pdf.text "Special Requests Report - #{@event.name}", size: 18, style: :bold
+  pdf.move_down 10
+  pdf.text "Date: #{@event.date.strftime("%B %d, %Y")}"
+  pdf.move_down 20
+  table_data = [["S.No.","Name", "Email", "Special Request"]]
+  @rsvps.each_with_index do |rsvp, index|
+    table_data << [
+      index+1,
+      rsvp.user&.name || "Guest",
+      rsvp.user&.email,
+      rsvp.special_request
+    ]
+  end
+  pdf.table(table_data, header: true)
+  send_data pdf.render,
+            filename: "special_requests_report.pdf",
+            type: "application/pdf",
+            disposition: "attachment"
+end
+
 
 
   private

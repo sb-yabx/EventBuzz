@@ -22,4 +22,4 @@ document.addEventListener("turbo:render", () => {
 document.addEventListener("turbo:load", () => {
   showFlash();
   initFormToggle();
-});
+});import "./channels"

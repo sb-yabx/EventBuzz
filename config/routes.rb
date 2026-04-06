@@ -1,30 +1,30 @@
 Rails.application.routes.draw do
+
+
   devise_for :users, controllers: {
   sessions: 'users/sessions',
   registrations: 'users/registrations'
-}
-
-  get "up" => "rails/health#show", as: :rails_health_check
-
+  }
 
   root "home#index"
- 
   resources :venues
+
+  get "up" => "rails/health#show", as: :rails_health_check
 
   resources :events do
     resources :activities , only: [:show, :new, :create, :edit, :update, :destroy] do
     end
     resources :rsvps, only: [:new, :create, :index] do
-    collection do
-      get :special_requests
-      get :download_pdf
+      collection do
+        get :special_requests
+        get :download_pdf
+        get :download_pdf_special_requests
+      end
     end
+  get :invite_guests
+  post :send_invites, on: :member
   end
 
-    get :invite_guests
-    post :send_invites, on: :member
-
-  end
 
   get "guest/invites", to: "guests#index", as: :my_invites
   get "guest/events", to: "guests#events", as: :my_events
@@ -56,6 +56,7 @@ Rails.application.routes.draw do
   get "/reports/rsvp_statistics", to: "reports#rsvp_statistics", as: :rsvp_statistics
   get "/reports/guest_preferences", to: "reports#guest_preferences", as: :guest_preferences
   get "/reports/venue_utilization", to: "reports#venue_utilization", as: :venue_utilization
+
 
 
   post '/events/:id/send_custom_email', to: 'events#send_custom_email', as: 'send_custom_email'

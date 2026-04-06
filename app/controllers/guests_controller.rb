@@ -2,7 +2,9 @@ class GuestsController < ApplicationController
   before_action :authenticate_user!
   before_action :only_guest
   def index
-    @events = Event.joins(:rsvps).where(rsvps: {user_id: current_user.id}).order(Arel.sql("date < current_date, date ASC"))
+    @events = Event.joins(:rsvps).where(rsvps: {user_id: current_user.id})
+    @upcoming_events = @events.where("date >= ?", Date.today)
+    @past_events = @events.where("date < ?", Date.today)
   end
 
   def events

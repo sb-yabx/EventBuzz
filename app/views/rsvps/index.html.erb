@@ -28,7 +28,9 @@
 
 </div>
 
+<% if current_user.role == "admin" || current_user == @event.event_manager %>
 <%= render "email_bar" , event: @event %>
+<% end%>
 
 <%= render "filter_bar" , event: @event, rsvps: @rsvps %>
 

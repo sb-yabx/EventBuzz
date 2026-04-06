@@ -74,7 +74,7 @@
 
         <% rsvp = @event.rsvps.find_by(user_id: current_user.id) %>
 
-        <% if rsvp && rsvp.pending? && @event.date > Date.today %>
+        <% if rsvp && rsvp.pending? && @event.date.strftime("%Y-%m-%d") > Date.today.strftime("%Y-%m-%d") %>
           <%= link_to "Fill RSVP",
                 new_event_rsvp_path(@event),
                 class: "btn btn-dark rounded-pill px-4" %>
