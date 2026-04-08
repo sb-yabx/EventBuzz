@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :events do
+    resources :queries, only: [:show, :new, :create,:index] do
+      resources :query_messages, only: [:create]
+    end
     resources :activities , only: [:show, :new, :create, :edit, :update, :destroy] do
     end
     resources :rsvps, only: [:new, :create, :index] do
@@ -28,6 +31,8 @@ Rails.application.routes.draw do
 
   get "guest/invites", to: "guests#index", as: :my_invites
   get "guest/events", to: "guests#events", as: :my_events
+  get "guest/queries", to: "guests#queries", as: :my_queries
+  get "event_manager/:id/queries", to: "event_manager#queries", as: :event_manager_queries
 
 
 

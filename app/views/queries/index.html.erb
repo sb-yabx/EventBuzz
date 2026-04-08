@@ -1,0 +1,37 @@
+<div class="container mt-5">
+  <h3 class="text-center mb-4">All Queries for <%= @event.name %></h3>
+
+  <% if @queries.any? %>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>User</th>
+            <th>Event Name</th>
+            <th>Query Time</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @queries.each do |query| %>
+            <tr>
+              <td><%= query.user.name %></td>
+              <td><%= query.event.name %></td>
+              <td>
+                <%= query.event.date.strftime("%d %b %I:%M %p") %>
+              </td>
+              <td>
+                <%= link_to "Open Chat",
+                  event_query_path(query.event, query),
+                  class: "btn btn-dark btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-center text-muted">No queries found.</p>
+  <% end %>
+</div>

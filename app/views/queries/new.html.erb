@@ -1,0 +1,18 @@
+<div class="container mt-5">
+  <h3 class="mb-4">Contact Organizer</h3>
+
+  <div class="card p-4 shadow-sm">
+    <h5><%= @event.name %></h5>
+
+    <%= form_with model: [@event, @query], local: true do |f| %>
+
+      <div class="mb-3">
+        <%= f.label :message, "Your Query" %>
+        <%= f.text_area :message, class: "form-control", rows: 4, placeholder: "Write your message..." %>
+      </div>
+
+      <%= f.submit "Start Chat", class: "btn btn-dark" %>
+
+    <% end %>
+  </div>
+</div>

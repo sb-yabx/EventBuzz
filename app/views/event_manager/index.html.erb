@@ -51,9 +51,13 @@
           <!-- RIGHT SIDE BUTTONS -->
           <div class="d-flex gap-2 mt-3 mt-md-0">
 
-             <% if event.date > Date.today%>
+            <% if event.date > Date.today%>
               <%= link_to "View",
                   event_path(event),
+                  class: "btn btn-dark btn-sm rounded-pill px-3" %>
+                  <%= link_to "Queries",
+                  event_queries_path(event),
+                  
                   class: "btn btn-dark btn-sm rounded-pill px-3" %>
             <%= link_to "Edit",
                   edit_event_path(event),

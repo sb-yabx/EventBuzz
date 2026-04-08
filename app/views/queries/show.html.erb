@@ -1,0 +1,43 @@
+<div class="container mt-4">
+
+  <h4>Chat - <%= @event.name %></h4>
+
+  <!-- PASS DATA TO JS -->
+  <div id="chat-container" class="mt-4 p-3 border rounded"
+       data-event-id="<%= @event.id %>"
+       data-query-id="<%= @query.id %>"
+       data-sender-type="<%= current_user == @event.event_manager ? 'admin' : 'user' %>">
+
+ <div id="chat-box" class="chat-box mb-3">
+
+  <% @messages.each do |msg| %>
+    <div class="chat-message <%= msg.sender_type == 'admin' ? 'admin' : 'user' %>">
+
+      <div class="chat-bubble">
+        <div class="chat-sender">
+          <%= msg.sender_type == 'admin' ? 'Event Manager' : (msg.user&.name || 'User') %>
+        </div>
+
+        <div class="chat-text">
+          <%= msg.message %>
+        </div>
+      </div>
+
+    </div>
+  <% end %>
+
+</div>
+
+    <!-- CHAT INPUT -->
+    <form id="chat-form">
+      <input type="text"
+             id="message-input"
+             class="form-control"
+             placeholder="Type message..." />
+
+      <button class="btn btn-dark mt-2">Send</button>
+      <%= link_to "Back", request.referer || root_path , class: "btn btn-secondary mt-2 ms-2" %>
+    </form>
+
+  </div>
+</div>

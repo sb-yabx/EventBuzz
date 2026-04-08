@@ -9,11 +9,12 @@
 <div class="container">
    <h4 class="mb-4 text-primary">Upcoming Events</h4>
   <div class="row g-4">
-    
-    <% @upcoming_events.each do |event| %>
-    
-      <div class="col-md-4">
-        
+    <% if @upcoming_events.empty? %>
+      <p class="text-muted">No upcoming events.</p>
+    <% else %>
+      <% @upcoming_events.each do |event| %>
+        <div class="col-md-4">
+          
         <div class="card border-0 shadow-lg h-100 rounded-4 invite-card">
         <%= link_to event_path(event), class:"text-decoration-none" do %>
           <!-- Card Body -->
@@ -68,6 +69,7 @@
     <% end %>
 
   </div>
+  <%end%>
 </div>
 
 

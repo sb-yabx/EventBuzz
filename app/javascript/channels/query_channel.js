@@ -1,15 +1,29 @@
 import consumer from "./consumer"
 
-consumer.subscriptions.create("QueryChannel", {
-  connected() {
-    // Called when the subscription is ready for use on the server
-  },
+export const createQueryChannel = (queryId) => {
+  return consumer.subscriptions.create(
+    { channel: "QueryChannel", query_id: queryId },
+    {
+      received(data) {  
+        const chatBox = document.getElementById("chat-box")
 
-  disconnected() {
-    // Called when the subscription has been terminated by the server
-  },
+        chatBox.innerHTML += `
+          <div class="chat-message ${data.sender_type === "admin" ? "admin" : "user"}">
+            <div class="chat-bubble">
+              <div class="chat-sender">
+                ${data.sender_type === "admin" ? "Event Manager" : (data.user_name || "You")}
+              </div>
+              <div class="chat-text">
+                ${data.message}
+              </div>
+            </div>
+          </div>
+        `
 
-  received(data) {
-    // Called when there's incoming data on the websocket for this channel
-  }
-});
+        chatBox.scrollTop = chatBox.scrollHeight
+      }
+    }
+  )
+}
+
+window.createQueryChannel = createQueryChannel

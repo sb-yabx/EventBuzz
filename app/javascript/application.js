@@ -12,6 +12,14 @@ import { initFormToggle } from "./form_toggle"
 // import files that attach to window
 import "./email_modal"
 import "./guest_toggle"
+import "./channels"
+import { chat } from "./chat"
+chat();
+
+// attach functions to window
+window.showFlash = showFlash
+window.initFormToggle = initFormToggle
+window.chat = chat
 
 // run on page load
 document.addEventListener("turbo:render", () => {
@@ -22,4 +30,5 @@ document.addEventListener("turbo:render", () => {
 document.addEventListener("turbo:load", () => {
   showFlash();
   initFormToggle();
-});import "./channels"
+});
+

@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <h3 class="mb-4">My Queries</h3>
+  <% if @events.any? %>
+
+  <div class="row">
+    <% @events.each do |event| %>
+
+      <div class="col-md-4 mb-4">
+        <div class="event-card">
+
+          <!-- Event Title -->
+          <div class="event-card-header">
+            <h5><%= event.name %></h5>
+          </div>
+
+          <!-- Event Details -->
+          <div class="event-card-body">
+            <p class="event-date">
+              📅 <%= event.date.strftime("%d %b %Y") %>
+            </p>
+
+            <p class="event-desc">
+              Manage your queries related to this event.
+            </p>
+          </div>
+
+          <!-- Action -->
+          <div class="event-card-footer">
+            <%= link_to "View Queries",
+                event_query_path(event, event.queries.find_by(user: current_user)),
+                class: "btn btn-dark btn-sm w-100" %>
+          </div>
+
+        </div>
+      </div>
+
+    <% end %>
+  </div>
+  <%else%>
+    <p class="text-center text-muted">No queries found.</p>
+  <%end%>
+</div>

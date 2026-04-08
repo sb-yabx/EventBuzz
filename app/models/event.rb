@@ -4,6 +4,7 @@ class Event < ApplicationRecord
   has_many :activities, dependent: :destroy
   has_many :guests
   has_many :rsvps
+  has_many :queries, dependent: :destroy
 
   validate :capacity_cannot_exceed_venue_capacity
 

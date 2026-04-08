@@ -56,6 +56,9 @@
         <li class="nav-item">
           <a class="nav-link" href="/rsvp/<%= current_user.id %>/dashboard" style="color: #ffffff;">RSVP Dahsboard</a>
         </li>
+        <li>
+          <a class="nav-link" href="/event_manager/<%= current_user.id %>/queries" style="color: #ffffff;">Queries</a>
+        </li>
         <% #end%>
 
         <%# Activity owners %>
@@ -75,6 +78,10 @@
 
         <li class="nav-item">
           <%= link_to "Events", my_events_path,
+          class: "nav-link", style: "color: #ffffff;" %>
+        </li>
+         <li class="nav-item">
+          <%= link_to "Queries", my_queries_path,
           class: "nav-link", style: "color: #ffffff;" %>
         </li>
 

@@ -63,6 +63,13 @@ class EventsController < ApplicationController
   # mannual email
   if params[:emails].present?
     emails = params[:emails].split(",").map(&:strip)
+    invalid = emails.reject { |e| e.strip.match?(/\A[a-zA-Z0-9._%+-]+@gmail\.com\z/) }
+
+    if invalid.any?
+    flash[:alert] = "Invalid emails: #{invalid.join(', ')}"
+    redirect_back(fallback_location: root_path)
+    return
+    end
   end
 
   # excel
