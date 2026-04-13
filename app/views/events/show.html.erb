@@ -33,7 +33,11 @@
       <div class="row mb-4">
 
         <div class="col-md-6">
+          <% if @event.date == @event.end_date%>
           <p>📅 <%= @event.date.strftime("%d %b %Y") %></p>
+          <%else%>
+           <p>📅 <%= @event.date.strftime("%d %b %Y")%> - <%= @event.end_date.strftime("%d %b %Y")%> </p>
+          <%end%>
           <p>
             ⏰ <%= @event.start_time.strftime("%I:%M %p") %> -
             <%= @event.end_time.strftime("%I:%M %p") %>

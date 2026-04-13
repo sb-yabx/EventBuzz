@@ -25,12 +25,16 @@
 
         <!-- Date -->
         <div class="row">
-        <div class="col-md-6 mb-3">
-        <%= f.label :date, "Event date",class:"form-label" %>
+        <div class="col-md-4 mb-3">
+        <%= f.label :date, "Start date",class:"form-label" %>
         <%= f.date_field :date, class:"form-control" , required: true %>
         </div>
+        <div class="col-md-4 mb-3">
+        <%= f.label :end_date, "End date",class:"form-label" %>
+        <%= f.date_field :end_date, class:"form-control" , required: true %>
+        </div>
 
-        <div class="col-md-6 mb-3">
+        <div class="col-md-4 mb-3">
         <%= f.label :capacity, "Capacity", class:"form-label" %>
         <%= f.number_field :capacity, class:"form-control", min: 0 %>
         </div>

@@ -60,8 +60,10 @@
                         <% end %>
 
                         <%= link_to venue_path(venue),
-                          method: :delete,
-                          data: { confirm: "Are you sure?" },
+                        data: {
+                          turbo_method: :delete,
+                          turbo_confirm: "Are you sure"
+                        },
                           class: "btn btn-sm btn-outline-danger rounded-pill" do %>
                           <i class="bi bi-trash"></i>
                         <% end %>

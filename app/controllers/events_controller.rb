@@ -40,6 +40,17 @@ class EventsController < ApplicationController
     end
   end
 
+  def destroy
+    @event = Event.find(params[:id])
+    if @event.destroy
+      redirect_to event_path(@event), notice: "Event deleted successfully"
+    else
+      redirect_to event_path(@event), alert: "Try again"
+    end
+
+  end
+
+
 
   # email invite to guests
 
@@ -157,6 +168,7 @@ end
     params.require(:event).permit(:name, 
     :description, 
     :date, 
+    :end_date,
     :start_time, 
     :end_time, 
     :event_manager_id, 

@@ -38,6 +38,17 @@ class VenuesController < ApplicationController
     end
   end
 
+  def destroy
+    @venue = Venue.find(params[:id])
+    if @venue.destroy
+      redirect_to venues_path , notice: 'Venue delete succesfully'
+    else
+     redirect_to venues_path, alert: "Try again!"
+    end
+
+  end
+
+
 
 
 

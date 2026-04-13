@@ -15,7 +15,8 @@ class Rsvp < ApplicationRecord
   # DIET
   enum :dietary_preference, {
     veg: "Veg",
-    non_veg: "Non-Veg"
+    non_veg: "Non-Veg",
+    vegan: "Vegan",
   }
 
   # SEATING

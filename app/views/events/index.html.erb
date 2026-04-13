@@ -54,7 +54,8 @@
               <!-- DATE -->
               <td>
                 <span class="badge bg-light text-dark px-3 py-2 rounded-pill">
-                  <%= event.date.to_date.strftime("%d %b %Y") %>
+                  <%= event.date.strftime("%d %b %Y") %> 
+                  <% if event.date < event.end_date%> - <%= event.end_date.strftime("%d %b %Y")%> <%end%>
                 </span>
               </td>
 
@@ -104,8 +105,11 @@
 
       <!-- Delete -->
       <%= link_to event_path(event),
-          method: :delete,
-          data: { confirm: "Are you sure?" },
+        data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure"
+        },
+          
           class: "btn btn-sm btn-danger rounded-pill px-3 d-flex align-items-center gap-1 shadow-sm" do %>
         <i class="bi bi-trash"></i> Delete
       <% end %>
