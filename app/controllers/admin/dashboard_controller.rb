@@ -3,7 +3,6 @@ class Admin::DashboardController < ApplicationController
   before_action :require_admin
 
   def index
-    # This action will render app/views/admin/dashboard/index.html.erb by default
     @users = User.where(role: [:event_manager, :activity_owner])
     @venues = Venue.all 
     @events = Event.all
@@ -20,7 +19,7 @@ class Admin::DashboardController < ApplicationController
 
   private 
   def require_admin
-    unless current_user&.admin?
+    unless current_user&.role == "admin"
       redirect_back fallback_location: root_path, alert: "Access denied"
     end
   end

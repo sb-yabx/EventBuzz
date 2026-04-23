@@ -1,6 +1,9 @@
 class GuestsController < ApplicationController
+  include CommonMethods
+
   before_action :authenticate_user!
-  before_action :only_guest
+  before_action :is_guest
+  
   def index
     @events = Event.joins(:rsvps).where(rsvps: {user_id: current_user.id})
     @upcoming_events = @events.where("date >= ?", Date.today)
@@ -15,15 +18,5 @@ class GuestsController < ApplicationController
     @events = Event.where(id: Query.where(user_id: current_user.id).select(:event_id)).order(date: :desc)
   end
 
-
-  private
-  def only_guest
-  allowed_roles = ["event_manager", "activity_owner", "admin"]
-
-  return unless allowed_roles.include?(current_user&.role)
-  redirect_to root_path, alert: "Only guests allowed"
-
-end
- 
 
 end

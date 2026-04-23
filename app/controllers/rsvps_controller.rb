@@ -1,7 +1,8 @@
 class RsvpsController < ApplicationController
+  include CommonMethods
   before_action :authenticate_user!
-  before_action :only_managers, except: [:new,:create]
-  before_action :only_event_manager , only: [:dashboard]
+  before_action :is_valid_manager, except: [:new,:create]
+  before_action :is_event_manager , only: [:dashboard]
 
   def index
     @event = Event.find(params[:event_id])
@@ -168,29 +169,6 @@ end
     :need_parking,
     :need_accommodation)
   end
-
-  def only_managers
-  allowed_roles = ["event_manager", "admin", "activity_owner"]
-
-  unless allowed_roles.include?(current_user&.role)
-    redirect_to root_path, alert: "Access denied"
-  end
-  end
-
-  def only_event_manager
-    unless current_user&.role == "event_manager"
-      redirect_to root_path, alert: "Access denied"
-    end
-  end
-
-
-  def only_guest
-    allowed_roles = ["event_manager", "admin", "activity_owner"]
-    return if allowed_roles.include?(current_user&.role)
-    redirect_to root_path, alert: "Only guests can see"
-    
-  end
-
 
 
 end

@@ -19,6 +19,10 @@ class User < ApplicationRecord
   guests.each do |guest|
     guest.update(user_id: self.id)
 
+    if self.role.blank?
+      self.update(role: "guest")
+    end
+
     # Also create RSVP if not exists
     Rsvp.find_or_create_by(user_id: self.id, event_id: guest.event_id) do |r|
       r.status = "pending"

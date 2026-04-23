@@ -1,6 +1,8 @@
 class ActivitiesController < ApplicationController
+  include CommonMethods
+
   before_action :authenticate_user!
-  before_action :is_owner
+  before_action :is_valid_user
 
   def index
   end
@@ -68,12 +70,4 @@ class ActivitiesController < ApplicationController
     )
   end
 
-  def is_owner
-    allowed_roles = ["event_manager", "admin", "activity_owner"]
-
-    unless allowed_roles.include?(current_user&.role)
-      flash[:alert] = "Access denied"  
-      redirect_to root_path
-    end
-  end
 end

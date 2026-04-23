@@ -1,11 +1,16 @@
 class QueriesController < ApplicationController
+  include CommonMethods
+  
   before_action :set_event
   before_action :set_query, only: [:show]
+  before_action :is_guest, only: [:new,:create]
+  before_action :only_authorized,  only: [:show]
 
   def index
     if current_user.role == "event_manager"
       @queries = @event.queries.all
-    else
+    end
+    if current_user.role == "guest"
       @queries = @event.queries.where(user: current_user)
     end
   end
@@ -43,8 +48,6 @@ class QueriesController < ApplicationController
   @messages = @query.query_messages.includes(:user)
   end
 
-
-
   private
 
   def set_event
@@ -54,4 +57,13 @@ class QueriesController < ApplicationController
   def set_query
     @query = @event.queries.find(params[:id])
   end
+
+
+  def only_authorized
+    unless current_user&.role == "event_manager" || 
+      current_user&.role == "guest"
+      redirect_to root_path, alert: "Access denied"
+    end
+  end
+
 end

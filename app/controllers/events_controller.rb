@@ -1,7 +1,10 @@
 
 class EventsController < ApplicationController
+  include CommonMethods
+
     before_action :authenticate_user!
     before_action :is_event_manager , except: [:show, :index]
+    before_action :is_admin, only: [:index]
 
   def new
     @event = Event.new
@@ -175,14 +178,5 @@ end
     :venue_id, 
     :capacity)
   end
-
-  def is_event_manager
-    allowed = ["event_manager", "admin"]
-    unless allowed.include?(current_user&.role)
-    redirect_to root_path, alert: "Access denied"
-    end
-  end
-
-
 
 end

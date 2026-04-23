@@ -1,5 +1,7 @@
 class ReportsController < ApplicationController
-
+  include CommonMethods
+  before_action :is_admin
+  
   def index
   end
 

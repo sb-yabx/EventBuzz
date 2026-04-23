@@ -1,6 +1,7 @@
 class VenuesController < ApplicationController
+  include CommonMethods
   before_action :authenticate_user!
-  before_action :require_admin 
+  before_action :is_admin 
 
   def new
     @venue = Venue.new
@@ -57,13 +58,5 @@ class VenuesController < ApplicationController
   def venue_params
     params.require(:venue).permit(:name, :address, :capacity,:facilities, :contact)
   end
-
-
-  def require_admin
-    unless current_user.role == "admin" || current_user.role == "event_manager"
-      redirect_to root_path, alert: "Access denied"
-    end
-  end
-
 
 end

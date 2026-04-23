@@ -1,68 +1,96 @@
-<div class="container mt-5">
+<div class="container py-4 py-md-5">
 
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold">All Event Mangers</h2>
-    <div class="d-flex gap-2">
-     <%= link_to "← Back", request.referer || root_path, class: "btn bg-dark btn-dark rounded-pill px-3" %>
-    <%= link_to "Add New Event Manager", new_admin_employee_path, class: "btn btn-success" %>
+  <!-- TOP BAR -->
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+    
+    <h2 class="fw-bold mb-0">All Event Managers</h2>
+
+    <div class="d-flex flex-column flex-sm-row gap-2 w-100 w-md-auto">
+      <%= link_to "← Back",
+        request.referer || root_path,
+        class: "btn btn-dark rounded-pill px-3  w-sm-auto" %>
+
+      <%= link_to "Add New Event Manager",
+        new_admin_employee_path,
+        class: "btn btn-success  w-sm-auto" %>
+    </div>
+
   </div>
-  </div>
 
-  <div class="card shadow-sm">
+  <!-- CARD -->
+  <div class="card shadow-sm border-0">
 
-    <div class="card-header bg-dark text-white">
-      Venue List
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center flex-wrap gap-2">
+      <span>Event Managers</span>
+      <span class="badge bg-light text-dark">
+        <%= @event_managers.count %> Total
+      </span>
     </div>
 
     <div class="card-body">
 
       <% if @event_managers.any? %>
 
-      <table class="table table-hover table-striped align-middle">
+        <!-- RESPONSIVE TABLE -->
+        <div class="table-responsive">
+          <table class="table table-hover table-striped align-middle">
 
-        <thead class="table-light">
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+            <thead class="table-light">
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th class="text-md-end">Actions</th>
+              </tr>
+            </thead>
 
-        <tbody>
+            <tbody>
 
-        <% @event_managers.each do |manager| %>
-          <tr>
+              <% @event_managers.each do |manager| %>
+                <tr>
 
-            <td>
-              <strong><%= manager.name %></strong>
-            </td>
+                  <!-- NAME -->
+                  <td class="fw-semibold">
+                    <i class="bi bi-person-circle me-2 text-secondary"></i>
+                    <%= manager.name %>
+                  </td>
 
-            <td>
-              <%= manager.email %>
-            </td>
+                  <!-- EMAIL -->
+                  <td class="text-muted">
+                    <%= manager.email %>
+                  </td>
 
-            <td>
+                  <!-- ACTIONS -->
+                  <td>
+                    <div class="d-flex flex-column flex-md-row gap-2 justify-content-md-end">
 
-              <%= link_to "Show", admin_employee_path(manager),class: "btn btn-sm btn-outline-danger" %>
+                      <%= link_to "View",
+                        admin_employee_path(manager),
+                        class: "btn btn-sm btn-outline-dark rounded-pill w-100 w-md-auto" %>
 
-             <%= link_to "Delete", admin_employee_path(manager),
-                 method: :delete,
-                data: { confirm: "Are you sure?" },
-                class: "btn btn-sm btn-outline-danger" %>
-            </td>
-             <td>
+                      <%= link_to "Delete",
+                        admin_employee_path(manager),
+                        method: :delete,
+                        data: { confirm: "Are you sure?" },
+                        class: "btn btn-sm btn-outline-danger rounded-pill w-100 w-md-auto" %>
 
-          </tr>
-        <% end %>
+                    </div>
+                  </td>
 
-        </tbody>
+                </tr>
+              <% end %>
 
-      </table>
+            </tbody>
 
+          </table>
+        </div>
 
       <% else %>
 
-      <p class="text-center text-muted">No venues found.</p>
+        <!-- EMPTY STATE -->
+        <div class="text-center py-5">
+          <i class="bi bi-people fs-1 text-muted"></i>
+          <p class="mt-3 text-muted">No event managers found</p>
+        </div>
 
       <% end %>
 
