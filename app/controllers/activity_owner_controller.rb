@@ -18,7 +18,4 @@ class ActivityOwnerController < ApplicationController
                       .joins(:event)
                       .order(date: :desc)
 end
-
-  
-
 end

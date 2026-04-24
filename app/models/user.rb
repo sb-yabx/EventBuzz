@@ -10,7 +10,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  enum :role, { admin: "admin", event_manager: "event_manager", activity_owner: "activity_owner", guest: "guest"}
+  enum :role, { admin: "admin", event_manager: "event_manager", activity_owner: "activity_owner", guest: "guest" }
 
 
   def link_guest_records
@@ -29,6 +29,4 @@ class User < ApplicationRecord
     end
   end
 end
-
-
 end

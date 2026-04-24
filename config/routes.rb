@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
-
-
   devise_for :users, controllers: {
-  sessions: 'users/sessions',
-  registrations: 'users/registrations'
+  sessions: "users/sessions",
+  registrations: "users/registrations"
   }
 
   root "home#index"
@@ -12,12 +10,12 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :events do
-    resources :queries, only: [:show, :new, :create,:index] do
-      resources :query_messages, only: [:create]
+    resources :queries, only: [ :show, :new, :create, :index ] do
+      resources :query_messages, only: [ :create ]
     end
-    resources :activities , only: [:show, :new, :create, :edit, :update, :destroy] do
+    resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ] do
     end
-    resources :rsvps, only: [:new, :create, :index] do
+    resources :rsvps, only: [ :new, :create, :index ] do
       collection do
         get :special_requests
         get :download_pdf
@@ -48,7 +46,7 @@ Rails.application.routes.draw do
 
 
 
-  get "admin/show/eventManagers" , to: "admin/employees#showEventManagers", as: :show_event_managers
+  get "admin/show/eventManagers", to: "admin/employees#showEventManagers", as: :show_event_managers
   get "admin/show/activityOwners", to: "admin/employees#showActivityOwners", as: :show_activity_owners
 
   get "/myevents/:id", to: "event_manager#index", as: :index_event_manager
@@ -64,9 +62,5 @@ Rails.application.routes.draw do
 
 
 
-  post '/events/:id/send_custom_email', to: 'events#send_custom_email', as: 'send_custom_email'
-
-
+  post "/events/:id/send_custom_email", to: "events#send_custom_email", as: "send_custom_email"
 end
-
-

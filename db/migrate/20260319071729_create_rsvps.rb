@@ -7,7 +7,7 @@ class CreateRsvps < ActiveRecord::Migration[8.1]
       t.string :status
       t.text :special_request
 
-      
+
       t.string :dietary_preference
       t.string :seating_preference
       t.boolean :need_parking
@@ -17,4 +17,3 @@ class CreateRsvps < ActiveRecord::Migration[8.1]
     end
   end
 end
-

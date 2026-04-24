@@ -3,7 +3,7 @@ class Rsvp < ApplicationRecord
   belongs_to :event
 
 
-  validates :user_id, uniqueness: {scope: :event_id}
+  validates :user_id, uniqueness: { scope: :event_id }
 
   # STATUS
   enum :status, {
@@ -16,7 +16,7 @@ class Rsvp < ApplicationRecord
   enum :dietary_preference, {
     veg: "Veg",
     non_veg: "Non-Veg",
-    vegan: "Vegan",
+    vegan: "Vegan"
   }
 
   # SEATING

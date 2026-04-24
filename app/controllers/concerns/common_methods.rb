@@ -20,10 +20,10 @@ module CommonMethods
   end
 
   def is_valid_manager
-    allowed_roles = ["event_manager", "admin", "activity_owner"]
+    allowed_roles = [ "event_manager", "admin", "activity_owner" ]
 
     unless allowed_roles.include?(current_user&.role)
-      flash[:alert] = "Access denied"  
+      flash[:alert] = "Access denied"
       redirect_to root_path
     end
   end
@@ -33,6 +33,4 @@ module CommonMethods
       redirect_to root_path, alert: "Access denied"
     end
   end
-
-
 end

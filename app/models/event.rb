@@ -15,5 +15,4 @@ class Event < ApplicationRecord
     errors.add(:capacity, "cannot exceed venue capacity (#{venue.capacity})")
   end
   end
-
 end

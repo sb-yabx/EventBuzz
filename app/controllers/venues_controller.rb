@@ -1,7 +1,7 @@
 class VenuesController < ApplicationController
   include CommonMethods
   before_action :authenticate_user!
-  before_action :is_admin 
+  before_action :is_admin
 
   def new
     @venue = Venue.new
@@ -14,7 +14,6 @@ class VenuesController < ApplicationController
     else
       render :new
     end
-
   end
 
   def index
@@ -33,7 +32,7 @@ class VenuesController < ApplicationController
   def update
     @venue = Venue.find(params[:id])
     if @venue.update(venue_params)
-      redirect_to @venue, notice: 'Venue was successfully updated.'
+      redirect_to @venue, notice: "Venue was successfully updated."
     else
       render :edit
     end
@@ -42,11 +41,10 @@ class VenuesController < ApplicationController
   def destroy
     @venue = Venue.find(params[:id])
     if @venue.destroy
-      redirect_to venues_path , notice: 'Venue delete succesfully'
+      redirect_to venues_path, notice: "Venue delete succesfully"
     else
      redirect_to venues_path, alert: "Try again!"
     end
-
   end
 
 
@@ -56,7 +54,6 @@ class VenuesController < ApplicationController
   private
 
   def venue_params
-    params.require(:venue).permit(:name, :address, :capacity,:facilities, :contact)
+    params.require(:venue).permit(:name, :address, :capacity, :facilities, :contact)
   end
-
 end

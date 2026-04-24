@@ -1,8 +1,8 @@
 class EventMailer < ApplicationMailer
-  default from: 'sneha040222@gmail.com'
+  default from: "sneha040222@gmail.com"
 
-  def custom_email(guest,subject,message,event)
-    @guest = guest 
+  def custom_email(guest, subject, message, event)
+    @guest = guest
     @event = event
     @message = message
 
@@ -11,5 +11,4 @@ class EventMailer < ApplicationMailer
       subject: subject
     )
   end
-
 end

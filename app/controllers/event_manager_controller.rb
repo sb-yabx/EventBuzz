@@ -13,5 +13,4 @@ def queries
                   .includes(:user, :event)
                   .order(created_at: :desc)
 end
-
 end

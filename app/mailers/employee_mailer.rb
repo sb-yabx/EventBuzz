@@ -5,5 +5,5 @@ class EmployeeMailer < ApplicationMailer
     @user = params[:user]
     @password = params[:password]
     mail(to: @user.email, subject: "Welcome to EventBuzz!")
-  end 
+  end
 end

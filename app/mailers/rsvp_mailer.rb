@@ -1,5 +1,4 @@
 class RsvpMailer < ApplicationMailer
-
   def reminder_email(user, event)
     @user = user
     @event = event
@@ -9,5 +8,4 @@ class RsvpMailer < ApplicationMailer
       subject: "Reminder: Please RSVP for #{@event.name}"
     )
   end
-
 end

@@ -22,10 +22,10 @@ class ActivitiesController < ApplicationController
     @activity = @event.activities.new(activity_params)
 
     if @activity.save
-      flash[:notice] = "Event created successfully!"  
+      flash[:notice] = "Event created successfully!"
       redirect_to event_path(@event)
     else
-      flash.now[:alert] = "Try again"                  
+      flash.now[:alert] = "Try again"
       render :new, status: :unprocessable_entity
     end
   end
@@ -40,10 +40,10 @@ class ActivitiesController < ApplicationController
     @activity = @event.activities.find(params[:id])
 
     if @activity.update(activity_params)
-      flash[:notice] = "Activity updated successfully!"   
+      flash[:notice] = "Activity updated successfully!"
       redirect_to event_path(@event)
     else
-      flash.now[:alert] = "Error in update. Try again"    
+      flash.now[:alert] = "Error in update. Try again"
       render :edit, status: :unprocessable_entity
     end
   end
@@ -53,7 +53,7 @@ class ActivitiesController < ApplicationController
     @activity = @event.activities.find(params[:id])
     @activity.destroy
 
-    flash[:notice] = "Activity deleted successfully!"  
+    flash[:notice] = "Activity deleted successfully!"
     redirect_to event_path(@event)
   end
 
@@ -69,5 +69,4 @@ class ActivitiesController < ApplicationController
       :user_id
     )
   end
-
 end

@@ -1,8 +1,8 @@
 class RsvpsController < ApplicationController
   include CommonMethods
   before_action :authenticate_user!
-  before_action :is_valid_manager, except: [:new,:create]
-  before_action :is_event_manager , only: [:dashboard]
+  before_action :is_valid_manager, except: [ :new, :create ]
+  before_action :is_event_manager, only: [ :dashboard ]
 
   def index
     @event = Event.find(params[:event_id])
@@ -39,15 +39,14 @@ class RsvpsController < ApplicationController
       redirect_to root_path, alert: "You are not invited"
     end
 
-    guest.update(user_id:current_user.id) if guest
+    guest.update(user_id: current_user.id) if guest
 
     @rsvp = Rsvp.new
-
   end
 
   def create
     @event = Event.find(params[:event_id])
-   
+
     @rsvp = @event.rsvps.find_or_initialize_by(user_id: current_user.id)
     @rsvp.assign_attributes(rsvp_params)
 
@@ -55,7 +54,7 @@ class RsvpsController < ApplicationController
       redirect_to @event, notice: "RSVP submitted. Thank You"
     else
       flash.now[:alert] =  "Error Occured. Try again"
-      render :new 
+      render :new
     end
   end
 
@@ -70,7 +69,7 @@ class RsvpsController < ApplicationController
 
   def special_requests
     @event = Event.find(params[:event_id])
-    @rsvps = @event.rsvps.where.not(special_request: [nil, ""])
+    @rsvps = @event.rsvps.where.not(special_request: [ nil, "" ])
   end
 
   # show all the invited guests for the event
@@ -80,7 +79,7 @@ class RsvpsController < ApplicationController
   end
 
 
-# download rsvp report pdf
+  # download rsvp report pdf
   def download_pdf
   @event = Event.find(params[:event_id])
 
@@ -109,7 +108,7 @@ class RsvpsController < ApplicationController
   pdf.text "Date: #{@event.date.strftime("%B %d, %Y")}"
   pdf.move_down 20
 
-  table_data = [["S.No.","Name", "Email", "Status", "Diet", "Seating", "Parking", "Accommodation"]]
+  table_data = [ [ "S.No.", "Name", "Email", "Status", "Diet", "Seating", "Parking", "Accommodation" ] ]
 
   @rsvps.each_with_index do |rsvp, index|
     table_data << [
@@ -136,13 +135,13 @@ end
 # downlaod special request pdf
 def download_pdf_special_requests
   @event = Event.find(params[:event_id])
-  @rsvps = @event.rsvps.where.not(special_request: [nil, ""])
+  @rsvps = @event.rsvps.where.not(special_request: [ nil, "" ])
   pdf = Prawn::Document.new
   pdf.text "Special Requests Report - #{@event.name}", size: 18, style: :bold
   pdf.move_down 10
   pdf.text "Date: #{@event.date.strftime("%B %d, %Y")}"
   pdf.move_down 20
-  table_data = [["S.No.","Name", "Email", "Special Request"]]
+  table_data = [ [ "S.No.", "Name", "Email", "Special Request" ] ]
   @rsvps.each_with_index do |rsvp, index|
     table_data << [
       index+1,
@@ -169,6 +168,4 @@ end
     :need_parking,
     :need_accommodation)
   end
-
-
 end

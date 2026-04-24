@@ -3,8 +3,8 @@ class EventsController < ApplicationController
   include CommonMethods
 
     before_action :authenticate_user!
-    before_action :is_event_manager , except: [:show, :index]
-    before_action :is_admin, only: [:index]
+    before_action :is_event_manager, except: [ :show, :index ]
+    before_action :is_admin, only: [ :index ]
 
   def new
     @event = Event.new
@@ -16,7 +16,7 @@ class EventsController < ApplicationController
     if @event.save
       redirect_to events_path, notice: "Created Successfully"
     else
-      render :new,status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -26,7 +26,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    @activities = Activity.where(event_id:@event)
+    @activities = Activity.where(event_id: @event)
   end
 
   def edit
@@ -50,7 +50,6 @@ class EventsController < ApplicationController
     else
       redirect_to event_path(@event), alert: "Try again"
     end
-
   end
 
 
@@ -107,7 +106,6 @@ class EventsController < ApplicationController
   emails = emails.map(&:downcase).uniq
 
   emails.each do |email|
-
     # Avoid duplicate guest
     guest = Guest.find_or_create_by(email: email, event_id: @event.id)
 
@@ -131,14 +129,14 @@ class EventsController < ApplicationController
 end
 
 
-# send custom email to guests
+  # send custom email to guests
   def send_custom_email
   @event = Event.find(params[:id])
 
   subject = params[:subject]
   message = params[:message]
 
-  guests = []  
+  guests = []
 
   case params[:target]
   when "all"
@@ -168,15 +166,14 @@ end
 
   private
   def event_params
-    params.require(:event).permit(:name, 
-    :description, 
-    :date, 
+    params.require(:event).permit(:name,
+    :description,
+    :date,
     :end_date,
-    :start_time, 
-    :end_time, 
-    :event_manager_id, 
-    :venue_id, 
+    :start_time,
+    :end_time,
+    :event_manager_id,
+    :venue_id,
     :capacity)
   end
-
 end

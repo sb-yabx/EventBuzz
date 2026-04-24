@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
   include CommonMethods
   before_action :is_admin
-  
+
   def index
   end
 
@@ -9,7 +9,6 @@ class ReportsController < ApplicationController
     @events = Event.includes(:venue, :guests).all.order(Arel.sql("date >= CURRENT_DATE DESC, date ASC"))
     @upcoming_events = Event.where("date >= ?", Date.today).order(:date)
     @completed_events = Event.where("date < ?", Date.today).order(:date)
-
   end
 
   def rsvp_statistics
@@ -37,5 +36,4 @@ class ReportsController < ApplicationController
   def venue_utilization
     @venues = Venue.includes(:events).all
   end
-
 end
