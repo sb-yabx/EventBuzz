@@ -9,19 +9,19 @@
       </h1>
 
       <p class="fs-5 text-dark mb-1">
-        📍 <%= @venue.address %>
+        <i class="fa-solid fa-location"></i> <%= @venue.address %>
       </p>
       
        <p class="fs-5 text-dark mb-1">
-        🪑 Capacity: <%= @venue.capacity %>
+        <i class="fa-solid fa-chair"></i> Capacity: <%= @venue.capacity %>
       </p>
 
        <p class="fs-5 text-dark mb-1">
-        📍 Facilities: <%= @venue.facilities %>
+        <i class="fa-solid fa-map-pin"></i> Facilities: <%= @venue.facilities %>
       </p>
 
        <p class="fs-5 text-dark mb-1">
-        📞 Contact: <%= @venue.contact %>
+        <i class="fa-solid fa-phone"></i> Contact: <%= @venue.contact %>
       </p>
 
       <h5 class="mt-4">Location</h5>
@@ -58,8 +58,8 @@
 
               <!-- Date + Time -->
               <h6 class=" mb-2 text-white">
-                📅 <%= event.date.strftime("%d %b") %> • 
-                ⏰ <%= event.start_time.strftime("%I:%M %p") %>
+                <i class="fa-solid fa-calendar"></i><%= event.date.strftime("%d %b") %> • 
+                <i class="fa-solid fa-clock"></i> <%= event.start_time.strftime("%I:%M %p") %>
               </h6>
 
               <!-- Spacer -->

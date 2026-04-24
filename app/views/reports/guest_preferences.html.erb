@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <h2 class="text-center mb-5">📊 Guest Preference Report</h2>
+  <h2 class="text-center mb-5"><i class="fa-solid fa-chart-simple"></i> Guest Preference Report</h2>
 
    <div class="text-end">
      <%= link_to "← Back", request.referer || root_path, class: "btn  btn-dark rounded-pill px-3" %>
@@ -24,7 +24,7 @@
 
           <!-- DIET -->
           <div class="section">
-            <p class="section-title">🍽 Dietary</p>
+            <p class="section-title"><i class="fa-solid fa-bowl-food"></i> Dietary</p>
             <div class="badge-row">
               <span class="badge bg-success">Veg <%= rsvps.where(dietary_preference: "veg").count %></span>
               <span class="badge bg-danger">Non-Veg <%= rsvps.where(dietary_preference: "non_veg").count %></span>
@@ -34,24 +34,23 @@
 
           <!-- SEATING -->
           <div class="section">
-            <p class="section-title">💺 Seating</p>
+            <p class="section-title"><i class="fa-solid fa-chair"></i> Seating</p>
             <div class="badge-row">
               <span class="badge bg-dark">Front <%= rsvps.where(seating_preference: "front").count %></span>
               <span class="badge bg-secondary">Back <%= rsvps.where(seating_preference: "back").count %></span>
               <span class="badge bg-info text-dark">Window <%= rsvps.where(seating_preference: "window").count %></span>
             </div>
           </div>
-
           <!-- PARKING + ACCOM -->
           <div class="section split">
             <div>
-              <p class="section-title">🚗 Parking</p>
+              <p class="section-title"><i class="fa-solid fa-square-parking"></i> Parking</p>
               <p>Yes: <strong><%= rsvps.where(need_parking: true).count %></strong></p>
               <p>No: <strong><%= rsvps.where(need_parking: false).count %></strong></p>
             </div>
 
             <div>
-              <p class="section-title">🏨 Stay</p>
+              <p class="section-title"><i class="fa-solid fa-hotel"></i> Stay</p>
               <p>Yes: <strong><%= rsvps.where(need_accommodation: true).count %></strong></p>
               <p>No: <strong><%= rsvps.where(need_accommodation: false).count %></strong></p>
             </div>
@@ -85,7 +84,7 @@
           </div>
 
           <div class="section">
-            <p class="section-title">🍽 Dietary</p>
+            <p class="section-title"><i class="fa-solid fa-bowl-food"></i> Dietary</p>
             <div class="badge-row">
               <span class="badge bg-success">Veg <%= rsvps.where(dietary_preference: "veg").count %></span>
               <span class="badge bg-danger">Non-Veg <%= rsvps.where(dietary_preference: "non_veg").count %></span>

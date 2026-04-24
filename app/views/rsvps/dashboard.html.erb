@@ -24,11 +24,11 @@
             <!-- Body -->
             <div class="card-body-custom">
               <p>
-                📅 <strong><%= event.date.strftime("%d %b %Y") %></strong>
+                <i class="fa-solid fa-calendar"></i> <strong><%= event.date.strftime("%d %b %Y") %></strong>
               </p>
 
               <p>
-                📍 <%= event.venue.try(:name) || "No venue" %>
+                <i class="fa-solid fa-location"></i> <%= event.venue.try(:name) || "No venue" %>
               </p>
 
               <div class="rsvp-count">
@@ -76,11 +76,11 @@
             <!-- Body -->
             <div class="card-body-custom">
               <p>
-                📅 <strong><%= event.date.strftime("%d %b %Y") %></strong>
+                <i class="fa-solid fa-calendar"></i> <strong><%= event.date.strftime("%d %b %Y") %></strong>
               </p>
 
               <p>
-                📍 <%= event.venue.try(:name) || "No venue" %>
+                <i class="fa-solid fa-location"></i> <%= event.venue.try(:name) || "No venue" %>
               </p>
 
               <div class="rsvp-count">

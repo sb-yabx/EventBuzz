@@ -2,7 +2,7 @@ class ActivitiesController < ApplicationController
   include CommonMethods
 
   before_action :authenticate_user!
-  before_action :is_valid_user
+  before_action :is_valid_manager
 
   def index
   end

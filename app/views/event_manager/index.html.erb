@@ -31,13 +31,13 @@
 
             <!-- DATE + TIME -->
             <p class="small text-muted mb-1">
-              📅 <%= event.date.strftime("%d %b") %> • 
-              ⏰ <%= event.start_time.strftime("%I:%M %p") %>
+             <i class="fa-solid fa-calendar-day"></i><%= event.date.strftime("%d %b") %> • 
+             <i class="fa-regular fa-clock"></i><%= event.start_time.strftime("%I:%M %p") %>
             </p>
 
             <!-- VENUE -->
             <p class="small text-muted mb-2">
-              📍 <%= event.venue&.name %> - 
+              <i class="fa-solid fa-location-dot"></i><%= event.venue&.name %> - 
               <%= event.venue&.address %>
             </p>
 
@@ -64,7 +64,7 @@
                   class: "btn btn-outline-dark btn-sm rounded-pill px-3" %>
                   <% elsif event.date == Date.today %>
                   <span class="status-badge today">
-                    🔥 Today
+                    <i class="fa-solid fa-calendar-day"></i> Today
                   </span>
                   <% else %>
                   <span class="status-badge today">

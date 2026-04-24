@@ -34,20 +34,20 @@
 
         <div class="col-md-6">
           <% if @event.date == @event.end_date%>
-          <p>📅 <%= @event.date.strftime("%d %b %Y") %></p>
+          <p><i class="fa-regular fa-calendar"></i> <%= @event.date.strftime("%d %b %Y") %></p>
           <%else%>
-           <p>📅 <%= @event.date.strftime("%d %b %Y")%> - <%= @event.end_date.strftime("%d %b %Y")%> </p>
+           <p><i class="fa-regular fa-calendar"></i> <%= @event.date.strftime("%d %b %Y")%> - <%= @event.end_date.strftime("%d %b %Y")%> </p>
           <%end%>
           <p>
-            ⏰ <%= @event.start_time.strftime("%I:%M %p") %> -
+            <i class="fa-regular fa-clock"></i> <%= @event.start_time.strftime("%I:%M %p") %> -
             <%= @event.end_time.strftime("%I:%M %p") %>
           </p>
-          <p>👥 Capacity: <%= @event.capacity %></p>
+          <p><i class="fa-solid fa-people-robbery"></i> Capacity: <%= @event.capacity %></p>
         </div>
 
         <div class="col-md-6 text-md-end">
           <p>
-            📍 <strong>
+           <i class="fa-solid fa-map-pin"></i> <strong>
               <%= @event.venue&.name %>, 
               <%= @event.venue&.address %>
             </strong>
@@ -147,7 +147,7 @@
               <h5 class="fw-bold mb-2"><%= activity.activity_name %></h5>
 
               <p class="small text-primary fw-semibold mb-1">
-                👤 <%= activity.user&.name || "No Owner Assigned" %>
+                <p><i class="fa-solid fa-people-robbery"></i> <%= activity.user&.name || "No Owner Assigned" %>
               </p>
 
               <p class="text-muted small mb-2">
@@ -155,7 +155,7 @@
               </p>
 
               <p class="small text-muted mb-0">
-                ⏰ <%= activity.start_time.strftime("%I:%M %p") %> -
+                <p><i class="fa-solid fa-clock"></i><%= activity.start_time.strftime("%I:%M %p") %> -
                 <%= activity.end_time.strftime("%I:%M %p") %>
               </p>
             </div>
