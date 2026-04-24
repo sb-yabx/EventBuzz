@@ -7,22 +7,22 @@ class Rsvp < ApplicationRecord
 
   # STATUS
   enum :status, {
-    attending: "Attending",
-    declined: "Not Attending",
-    pending: "Pending"
+    attending: 'Attending',
+    declined: 'Not Attending',
+    pending: 'Pending'
   }
 
   # DIET
   enum :dietary_preference, {
-    veg: "Veg",
-    non_veg: "Non-Veg",
-    vegan: "Vegan"
+    veg: 'Veg',
+    non_veg: 'Non-Veg',
+    vegan: 'Vegan'
   }
 
   # SEATING
   enum :seating_preference, {
-    window: "Window",
-    front: "Front",
-    back: "Back"
+    window: 'Window',
+    front: 'Front',
+    back: 'Back'
   }
 end

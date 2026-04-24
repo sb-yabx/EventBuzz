@@ -1,6 +1,6 @@
 
 class EventsController < ApplicationController
-  include CommonMethods
+  include BeforeAction
 
     before_action :authenticate_user!
     before_action :is_event_manager, except: [ :show, :index ]
@@ -14,14 +14,14 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save
-      redirect_to events_path, notice: "Created Successfully"
+      redirect_to events_path, notice: 'Created Successfully'
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def index
-    @events = Event.all.order(Arel.sql("date < current_date, date ASC"))
+    @events = Event.all.order(Arel.sql('date < current_date, date ASC'))
   end
 
   def show
@@ -37,7 +37,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
 
     if @event.update(event_params)
-      redirect_to event_path(@event), notice: "Event updated successfully!"
+      redirect_to event_path(@event), notice: 'Event updated successfully!'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -46,9 +46,9 @@ class EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:id])
     if @event.destroy
-      redirect_to event_path(@event), notice: "Event deleted successfully"
+      redirect_to event_path(@event), notice: 'Event deleted successfully'
     else
-      redirect_to event_path(@event), alert: "Try again"
+      redirect_to event_path(@event), alert: 'Try again'
     end
   end
 
@@ -64,18 +64,18 @@ class EventsController < ApplicationController
   @event = Event.find(params[:id])
 
   if params[:emails].present? && params[:excel_file].present?
-  redirect_to request.referer, alert: "Please use only one option: Email or Excel" and return
+  redirect_to request.referer, alert: 'Please use only one option: Email or Excel' and return
   end
 
   if params[:emails].blank? && params[:excel_file].blank?
-    redirect_to request.referer, alert: "Please provide emails or upload Excel file" and return
+    redirect_to request.referer, alert: 'Please provide emails or upload Excel file' and return
   end
 
   emails = []
 
   # mannual email
   if params[:emails].present?
-    emails = params[:emails].split(",").map(&:strip)
+    emails = params[:emails].split(',').map(&:strip)
     invalid = emails.reject { |e| e.strip.match?(/\A[a-zA-Z0-9._%+-]+@gmail\.com\z/) }
 
     if invalid.any?
@@ -90,7 +90,7 @@ class EventsController < ApplicationController
     sheet = Roo::Spreadsheet.open(params[:excel_file].path)
 
     header = sheet.row(1)
-    email_index = header.index("email")
+    email_index = header.index('email')
 
     if email_index.nil?
       redirect_to request.referer, alert: "Excel must have 'email' column" and return
@@ -117,7 +117,7 @@ class EventsController < ApplicationController
         user_id: user.id,
         event_id: @event.id
       ) do |r|
-        r.status = "pending"
+        r.status = 'pending'
       end
     end
 
@@ -125,7 +125,7 @@ class EventsController < ApplicationController
     GuestMailer.invite_email(email.strip, @event).deliver_later
   end
 
-  redirect_to rsvp_invites_path(@event), notice: "Invitations sent!"
+  redirect_to rsvp_invites_path(@event), notice: 'Invitations sent!'
 end
 
 
@@ -139,18 +139,18 @@ end
   guests = []
 
   case params[:target]
-  when "all"
+  when 'all'
     guests = @event.guests
 
-  when "pending"
+  when 'pending'
     guests = @event.guests.joins(user: :rsvps)
-                 .where(rsvps: { status: "pending" })
+                 .where(rsvps: { status: 'pending' })
 
-  when "attending"
+  when 'attending'
     guests = @event.guests.joins(user: :rsvps)
-                 .where(rsvps: { status: "attending" })
+                 .where(rsvps: { status: 'attending' })
 
-  when "individual"
+  when 'individual'
     guests = @event.guests.where(id: params[:guest_ids])
   end
 
@@ -158,7 +158,7 @@ end
     EventMailer.custom_email(guest, subject, message, @event).deliver_later
   end
 
-  redirect_to event_rsvps_path(@event), notice: "Emails sent!"
+  redirect_to event_rsvps_path(@event), notice: 'Emails sent!'
 end
 
 

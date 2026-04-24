@@ -1,23 +1,23 @@
 class ReportsController < ApplicationController
-  include CommonMethods
+  include BeforeAction
   before_action :is_admin
 
   def index
   end
 
   def event_reports
-    @events = Event.includes(:venue, :guests).all.order(Arel.sql("date >= CURRENT_DATE DESC, date ASC"))
-    @upcoming_events = Event.where("date >= ?", Date.today).order(:date)
-    @completed_events = Event.where("date < ?", Date.today).order(:date)
+    @events = Event.includes(:venue, :guests).all.order(Arel.sql('date >= CURRENT_DATE DESC, date ASC'))
+    @upcoming_events = Event.where('date >= ?', Date.today).order(:date)
+    @completed_events = Event.where('date < ?', Date.today).order(:date)
   end
 
   def rsvp_statistics
-  @upcoming_events = Event.where("date >= ?", Date.today).order(:date)
-  @completed_events = Event.where("date < ?", Date.today).order(:date)
+  @upcoming_events = Event.where('date >= ?', Date.today).order(:date)
+  @completed_events = Event.where('date < ?', Date.today).order(:date)
   @total_invited = Guest.count
-  @accepted = Rsvp.where(status: "attending").count
-  @declined = Rsvp.where(status: "declined").count
-  @pending = Rsvp.where(status: "pending").count
+  @accepted = Rsvp.where(status: 'attending').count
+  @declined = Rsvp.where(status: 'declined').count
+  @pending = Rsvp.where(status: 'pending').count
 
   total = @total_invited
 
@@ -29,8 +29,8 @@ class ReportsController < ApplicationController
   end
 
   def guest_preferences
-    @upcoming_events = Event.where("date >= ?", Date.today).order(:date)
-    @completed_events = Event.where("date < ?", Date.today).order(:date)
+    @upcoming_events = Event.where('date >= ?', Date.today).order(:date)
+    @completed_events = Event.where('date < ?', Date.today).order(:date)
   end
 
   def venue_utilization

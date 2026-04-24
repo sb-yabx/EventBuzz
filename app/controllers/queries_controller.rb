@@ -1,5 +1,5 @@
 class QueriesController < ApplicationController
-  include CommonMethods
+  include BeforeAction
 
   before_action :set_event
   before_action :set_query, only: [ :show ]
@@ -7,10 +7,10 @@ class QueriesController < ApplicationController
   before_action :only_authorized,  only: [ :show ]
 
   def index
-    if current_user.role == "event_manager"
+    if current_user.role == 'event_manager'
       @queries = @event.queries.all
     end
-    if current_user.role == "guest"
+    if current_user.role == 'guest'
       @queries = @event.queries.where(user: current_user)
     end
   end
@@ -19,7 +19,7 @@ class QueriesController < ApplicationController
    @event = Event.find(params[:event_id])
    @existing_query = @event.queries.find_by(user: current_user)
    if @existing_query
-      redirect_to event_query_path(@event, @existing_query), notice: "Start Chatting."
+      redirect_to event_query_path(@event, @existing_query), notice: 'Start Chatting.'
    else
       @query = @event.queries.new
    end
@@ -34,12 +34,12 @@ class QueriesController < ApplicationController
   if message_text.present?
     @query.query_messages.create!(
       message: message_text,
-      sender_type: "user",
+      sender_type: 'user',
       user: current_user
     )
   end
 
-  redirect_to event_query_path(@event, @query), notice: "Chat started!"
+  redirect_to event_query_path(@event, @query), notice: 'Chat started!'
   end
 
 
@@ -60,9 +60,9 @@ class QueriesController < ApplicationController
 
 
   def only_authorized
-    unless current_user&.role == "event_manager" ||
-      current_user&.role == "guest"
-      redirect_to root_path, alert: "Access denied"
+    unless current_user&.role == 'event_manager' ||
+      current_user&.role == 'guest'
+      redirect_to root_path, alert: 'Access denied'
     end
   end
 end

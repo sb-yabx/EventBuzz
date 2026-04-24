@@ -66,13 +66,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   build_resource(sign_up_params)
 
   if resource.save
-    flash[:notice] = "Signed up successfully!"
+    flash[:notice] = 'Signed up successfully!'
     sign_up(resource_name, resource)
     respond_with resource, location: after_sign_up_path_for(resource)
   else
     # Use flash.now so it works when rendering
     puts resource.errors.full_messages
-    flash.now[:alert] = resource.errors.full_messages.join(", ")
+    flash.now[:alert] = resource.errors.full_messages.join(', ')
     clean_up_passwords(resource)
     set_minimum_password_length
     respond_with resource, status: :unprocessable_entity

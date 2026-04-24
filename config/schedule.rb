@@ -21,6 +21,6 @@
 
 
 
-every 1.day, at: "10:00 am" do
-  runner "SendRsvpRemindersJob.perform_later"
+every 1.day, at: '10:00 am' do
+  runner 'SendRsvpRemindersJob.perform_later'
 end

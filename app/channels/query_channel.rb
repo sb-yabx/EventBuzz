@@ -7,8 +7,8 @@ class QueryChannel < ApplicationCable::Channel
   # Explicit method instead of receive
   def send_message(data)
     message = @query.query_messages.create!(
-      message: data["message"],
-      sender_type: data["sender_type"],
+      message: data['message'],
+      sender_type: data['sender_type'],
       user: current_user
     )
 

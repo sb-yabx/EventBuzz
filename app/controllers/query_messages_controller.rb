@@ -4,7 +4,7 @@ class QueryMessagesController < ApplicationController
 
     @message = @query.query_messages.create!(
       message: params[:message],
-      sender_type: "user",
+      sender_type: 'user',
       user: current_user
     )
 

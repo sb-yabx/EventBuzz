@@ -3,5 +3,5 @@ class QueryMessage < ApplicationRecord
   belongs_to :user, optional: true
   validates :message, presence: true
 
-  enum :sender_type, { user: "user", admin: "admin" }
+  enum :sender_type, { user: 'user', admin: 'admin' }
 end
