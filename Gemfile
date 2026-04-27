@@ -75,7 +75,8 @@ end
 gem 'roo'
 
 gem 'devise'
-gem 'letter_opener', group: :development
+
+gem 'dotenv-rails'
 
 # for scheduling background jobs
 gem 'whenever', require: false

@@ -4,7 +4,6 @@ class QueryChannel < ApplicationCable::Channel
     stream_for @query
   end
 
-  # Explicit method instead of receive
   def send_message(data)
     message = @query.query_messages.create!(
       message: data['message'],

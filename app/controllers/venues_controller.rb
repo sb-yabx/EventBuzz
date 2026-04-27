@@ -47,10 +47,6 @@ class VenuesController < ApplicationController
     end
   end
 
-
-
-
-
   private
 
   def venue_params
