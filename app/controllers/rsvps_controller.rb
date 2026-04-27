@@ -60,7 +60,7 @@ class RsvpsController < ApplicationController
 
   # dashboard for event manager to see all the rsvps for their events
   def dashboard
-    @events = Event.where(event_manager_id: params[:id])
+    @events = Event.where(event_manager_id: params[:id]).includes(:venue)
     @upcoming_events = @events.where('date >= ?', Date.today)
     @past_events = @events.where('date < ?', Date.today)
   end

@@ -1,4 +1,5 @@
 require 'active_support/core_ext/integer/time'
+require 'bullet'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -93,5 +94,16 @@ Rails.application.configure do
   authentication: ENV['SMTP_AUTH'],
   enable_starttls_auto: true
 }
+
+
+config.after_initialize do
+  Bullet.enable = true
+  Bullet.alert = true          # browser alert popup
+  Bullet.console = true        # logs in browser console
+  Bullet.rails_logger = true   # logs in Rails log
+  Bullet.add_footer = true     # shows warnings at bottom of page
+end
+
+
 
 end

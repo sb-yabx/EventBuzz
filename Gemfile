@@ -78,6 +78,10 @@ gem 'devise'
 
 gem 'dotenv-rails'
 
+group :developement , :test do 
+  gem 'bullet'
+end
+
 # for scheduling background jobs
 gem 'whenever', require: false
 

@@ -4,16 +4,15 @@
      <%= link_to "← Back", request.referer || root_path, class: "btn  btn-dark rounded-pill px-3" %>
      </div>
 
-  <!-- ================= UPCOMING EVENTS ================= -->
   <h4 class="mb-4 text-primary">Upcoming Events</h4>
 
   <div class="row">
     <% @upcoming_events.each do |event| %>
 
-      <% total_invited = event.guests.count %>
-      <% accepted = event.rsvps.where(status: "attending").count %>
-      <% declined = event.rsvps.where(status: "declined").count %>
-      <% pending = event.rsvps.where(status: "pending").count %>
+      <% total_invited = event.total_invited %>
+      <% accepted = event.accepted_count %>
+      <% declined = event.declined_count %>
+      <% pending = event.pending_count %>
 
       <% response_rate = total_invited > 0 ? ((accepted + declined) * 100 / total_invited) : 0 %>
 
@@ -52,19 +51,18 @@
     <% end %>
   </div>
 
-  <!-- ================= DIVIDER ================= -->
+  
   <hr class="my-5">
 
-  <!-- ================= COMPLETED EVENTS ================= -->
   <h4 class="mb-4 text-secondary">Completed Events</h4>
 
   <div class="row">
     <% @completed_events.each do |event| %>
 
-      <% total_invited = event.guests.count %>
-      <% accepted = event.rsvps.where(status: "attending").count %>
-      <% declined = event.rsvps.where(status: "declined").count %>
-      <% pending = event.rsvps.where(status: "pending").count %>
+      <% total_invited = event.total_invited %>
+      <% accepted = event.accepted_count %>
+      <% declined = event.declined_count %>
+      <% pending = event.pending_count %>
 
       <% response_rate = total_invited > 0 ? ((accepted + declined) * 100 / total_invited) : 0 %>
 

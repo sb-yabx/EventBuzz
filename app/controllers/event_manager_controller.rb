@@ -4,7 +4,7 @@ class EventManagerController < ApplicationController
     before_action :is_event_manager
 
   def index
-    @events = Event.where(event_manager_id: params[:id]).order(Arel.sql('date < current_date, date ASC'))
+    @events = Event.where(event_manager_id: params[:id]).order(Arel.sql('date < current_date, date ASC')).includes(:venue)
   end
 
 def queries

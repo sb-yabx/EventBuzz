@@ -6,7 +6,6 @@ class ReportsController < ApplicationController
   end
 
   def event_reports
-    @events = Event.includes(:venue, :guests).all.order(Arel.sql('date >= CURRENT_DATE DESC, date ASC'))
     @upcoming_events = Event.where('date >= ?', Date.today).order(:date)
     @completed_events = Event.where('date < ?', Date.today).order(:date)
   end

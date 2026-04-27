@@ -32,11 +32,12 @@ class Admin::EmployeesController < ApplicationController
   @user = User.find(params[:id])
 
   if @user.role == 'event_manager'
-    @events = Event.where(event_manager_id: @user.id)
+    @events = Event.where(event_manager_id: @user.id).includes(:venue)
 
   elsif @user.role == 'activity_owner'
     @events = Event.joins(:activities)
                    .where(activities: { user_id: @user.id })
+                   .includes(:venue)
                    .distinct
 
   else

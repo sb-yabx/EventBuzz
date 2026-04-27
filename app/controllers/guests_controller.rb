@@ -12,6 +12,7 @@ class GuestsController < ApplicationController
 
   def events
      @events = Event.joins(:rsvps).where(rsvps: { user_id: current_user.id }).order(Arel.sql('date < current_date, date ASC'))
+     .includes(:venue)
   end
 
   def queries

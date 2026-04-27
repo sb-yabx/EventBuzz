@@ -21,12 +21,12 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = Event.all.order(Arel.sql('date < current_date, date ASC'))
+    @events = Event.all.order(Arel.sql('date < current_date, date ASC')).includes(:event_manager)
   end
 
   def show
     @event = Event.find(params[:id])
-    @activities = Activity.where(event_id: @event)
+    @activities = Activity.where(event_id: @event).includes(:user)
   end
 
   def edit

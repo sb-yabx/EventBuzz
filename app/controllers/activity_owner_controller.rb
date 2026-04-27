@@ -5,7 +5,7 @@ class ActivityOwnerController < ApplicationController
     before_action :is_activity_owner
 
   def index
-  activities = Activity.where(user_id: params[:id])
+  activities = Activity.where(user_id: params[:id]).includes(:event)
   @event = Event.find_by(id: params[:event_id])
 
   @upcoming_activities = activities
