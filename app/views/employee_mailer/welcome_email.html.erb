@@ -6,7 +6,10 @@
 
 <p>
   Email: <%= @user.email %><br>
-  Password: <%= @password %>
 </p>
 
-<p>Please log in and change your password immediately.</p>
+<p>Click below to set your password:</p>
+
+<a href="<%= @reset_link %>">Set Password</a>
+
+

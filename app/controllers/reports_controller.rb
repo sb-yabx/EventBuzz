@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
   include BeforeAction
+  before_action :authenticate_user!
   before_action :is_admin
 
   def index

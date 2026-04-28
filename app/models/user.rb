@@ -5,13 +5,19 @@ class User < ApplicationRecord
   has_many :rsvps
   has_many :queries
   after_create :link_guest_records
+
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+       :recoverable, :rememberable, :validatable, :timeoutable
 
   enum :role, { admin: 'admin', event_manager: 'event_manager', activity_owner: 'activity_owner', guest: 'guest' }
 
+
+  def password_required?
+  new_record? ? false : super
+  end
 
   def link_guest_records
   guests = Guest.where(email: self.email)

@@ -1,6 +1,6 @@
 class QueriesController < ApplicationController
   include BeforeAction
-
+  before_action :authenticate_user!
   before_action :set_event
   before_action :set_query, only: [ :show ]
   before_action :is_guest, only: [ :new, :create ]
@@ -60,9 +60,9 @@ class QueriesController < ApplicationController
 
 
   def only_authorized
-    unless current_user&.role == 'event_manager' ||
-      current_user&.role == 'guest'
-      redirect_to root_path, alert: 'Access denied'
-    end
+    @query = @event.queries.find_by(id: params[:id])
+    return redirect_to root_path, alert: 'Not found' unless @query
+    return if current_user.admin? || @event.event_manager_id == current_user.id
+    redirect_to root_path, alert: 'Access denied' unless @query.user_id == current_user.id
   end
 end

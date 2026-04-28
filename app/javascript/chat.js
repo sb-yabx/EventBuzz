@@ -7,6 +7,7 @@ export function chat() {
 
   if (!container) return
 
+
   const senderType = container.dataset.senderType;
   console.log("Sender type:", senderType)
   const queryId = container.dataset.queryId
@@ -26,7 +27,13 @@ export function chat() {
 
     const message = input.value
     console.log("Message:", message)
+    
     if (message.trim() === "") return
+
+    if (!channel.isConnected) {
+  console.log("Waiting for connection...")
+  return
+}
 
     channel.perform("send_message", {
       query_id: queryId,

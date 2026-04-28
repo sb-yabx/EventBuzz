@@ -4,6 +4,16 @@ export const createQueryChannel = (queryId) => {
   return consumer.subscriptions.create(
     { channel: "QueryChannel", query_id: queryId },
     {
+      connected() {
+        console.log(" Connected to QueryChannel")
+        this.isConnected = true
+      },
+
+      disconnected() {
+        console.log("Disconnected from QueryChannel")
+        this.isConnected = false
+      },
+
       received(data) {  
         const chatBox = document.getElementById("chat-box")
 

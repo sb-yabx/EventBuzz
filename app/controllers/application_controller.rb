@@ -10,9 +10,9 @@ class ApplicationController < ActionController::Base
   # Permit extra fields (name and role) during sign up and account update
   def configure_permitted_parameters
     # For sign up
-    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name, :role ])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
 
     # For account update
-    devise_parameter_sanitizer.permit(:account_update, keys: [ :name, :role ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :name ])
   end
 end

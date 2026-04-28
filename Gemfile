@@ -76,7 +76,7 @@ gem 'roo'
 
 gem 'devise'
 
-gem 'dotenv-rails'
+gem 'dotenv-rails', groups: [:development, :test]
 
 group :developement , :test do 
   gem 'bullet'

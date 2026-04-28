@@ -1,5 +1,6 @@
 class EventMailer < ApplicationMailer
-  default from: 'sneha040222@gmail.com'
+  default from: ENV.fetch('MAILER_FROM', 'noreply@eventbuzz.com')
+  # default from: 'sneha040222@gmail.com'
 
   def custom_email(guest, subject, message, event)
     @guest = guest

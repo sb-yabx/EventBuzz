@@ -14,7 +14,12 @@ import "./email_modal"
 import "./guest_toggle"
 import "./channels"
 import { chat } from "./chat"
-chat();
+
+
+document.addEventListener("turbo:load", () => {
+  chat()
+})
+
 
 // attach functions to window
 window.showFlash = showFlash

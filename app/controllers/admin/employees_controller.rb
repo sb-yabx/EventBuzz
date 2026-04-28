@@ -7,16 +7,15 @@ class Admin::EmployeesController < ApplicationController
   end
 
   def create
-    password = Devise.friendly_token.first(8)
     @user = User.new(user_params)
-    @user.password = password
-    @user.password_confirmation = password
 
     if @user.save
-      EmployeeMailer.with(user: @user, password: password).welcome_email.deliver_later
-      redirect_to admin_dashboard_path, notice: 'Employee created successfully.'
+      token = @user.send_reset_password_instructions
+      EmployeeMailer.with(user: @user, token: token).welcome_email.deliver_later
+
+      redirect_to admin_dashboard_path, notice: 'Employee invited. They will set their own password.'
     else
-      render :new, alert: "Error creating employee: #{@user.errors.full_messages.join(", ")}"
+      render :new
     end
   end
 

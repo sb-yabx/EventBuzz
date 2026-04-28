@@ -3,6 +3,10 @@ class EventsController < ApplicationController
   include BeforeAction
 
     before_action :authenticate_user!
+
+    before_action :verify_event_ownership! ,  only: [:edit, :update, :destroy,
+    :invite_guests, :send_invites, :send_custom_email]
+
     before_action :is_event_manager, except: [ :show, :index ]
     before_action :is_admin, only: [ :index ]
 
@@ -53,7 +57,6 @@ class EventsController < ApplicationController
   end
 
 
-
   # email invite to guests
 
   def invite_guests
@@ -64,11 +67,11 @@ class EventsController < ApplicationController
   @event = Event.find(params[:id])
 
   if params[:emails].present? && params[:excel_file].present?
-  redirect_to request.referer, alert: 'Please use only one option: Email or Excel' and return
+    redirect_to invite_guests_event_path(@event), alert: 'Please use only one option'
   end
 
   if params[:emails].blank? && params[:excel_file].blank?
-    redirect_to request.referer, alert: 'Please provide emails or upload Excel file' and return
+    redirect_to invite_guests_event_path(@event), alert: 'Please use only one option'
   end
 
   emails = []
@@ -76,7 +79,8 @@ class EventsController < ApplicationController
   # mannual email
   if params[:emails].present?
     emails = params[:emails].split(',').map(&:strip)
-    invalid = emails.reject { |e| e.strip.match?(/\A[a-zA-Z0-9._%+-]+@gmail\.com\z/) }
+    # invalid = emails.reject { |e| e.strip.match?(/\A[a-zA-Z0-9._%+-]+@gmail\.com\z/) }
+    invalid = emails.reject { |e| e.match?(URI::MailTo::EMAIL_REGEXP) }
 
     if invalid.any?
     flash[:alert] = "Invalid emails: #{invalid.join(', ')}"
@@ -93,7 +97,7 @@ class EventsController < ApplicationController
     email_index = header.index('email')
 
     if email_index.nil?
-      redirect_to request.referer, alert: "Excel must have 'email' column" and return
+      redirect_to invite_guests_event_path(@event), alert: "Excel must have 'email' column" and return
     end
 
     (2..sheet.last_row).each do |i|
@@ -162,8 +166,6 @@ end
 end
 
 
-
-
   private
   def event_params
     params.require(:event).permit(:name,
@@ -176,4 +178,15 @@ end
     :venue_id,
     :capacity)
   end
+
+
+  def verify_event_ownership!
+  @event = Event.find(params[:id])
+  return if current_user.admin?
+    unless @event.event_manager_id == current_user.id
+    redirect_to root_path, alert: 'Access denied'
+    end
+  end
+
+
 end
