@@ -26,8 +26,8 @@
         <!-- Date -->
         <div class="row">
         <div class="col-md-4 mb-3">
-        <%= f.label :date, "Start date",class:"form-label" %>
-        <%= f.date_field :date, class:"form-control" , required: true %>
+        <%= f.label :start_date, "Start date",class:"form-label" %>
+        <%= f.date_field :start_date, class:"form-control" , required: true %>
         </div>
         <div class="col-md-4 mb-3">
         <%= f.label :end_date, "End date",class:"form-label" %>
@@ -40,18 +40,6 @@
         </div>
 </div>
 
-        <!-- Time Row -->
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <%= f.label :start_time, class: "form-label fw-semibold" %>
-            <%= f.time_field :start_time, class: "form-control rounded-3", required: true %>
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <%= f.label :end_time, class: "form-label fw-semibold" %>
-            <%= f.time_field :end_time, class: "form-control rounded-3", required: true %>
-          </div>
-        </div>
 
         <!-- Venue -->
         <div class="mb-3">

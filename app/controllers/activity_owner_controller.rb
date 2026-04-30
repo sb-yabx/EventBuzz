@@ -9,13 +9,13 @@ class ActivityOwnerController < ApplicationController
   @event = Event.find_by(id: params[:event_id])
 
   @upcoming_activities = activities
-                          .where('events.date >= ?', Date.today)
+                          .where('events.start_date >= ?', Date.today)
                           .joins(:event)
-                          .order(:date)
+                          .order(:start_date)
 
   @past_activities = activities
-                      .where('events.date < ?', Date.today)
+                      .where('events.start_date < ?', Date.today)
                       .joins(:event)
-                      .order(date: :desc)
+                      .order(start_date: :desc)
   end
 end

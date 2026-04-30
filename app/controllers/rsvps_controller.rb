@@ -61,8 +61,8 @@ class RsvpsController < ApplicationController
   # dashboard for event manager to see all the rsvps for their events
   def dashboard
     @events = current_user.events.includes(:venue)
-    @upcoming_events = @events.where('date >= ?', Date.today)
-    @past_events = @events.where('date < ?', Date.today)
+    @upcoming_events = @events.where('start_date >= ?', Date.today)
+    @past_events = @events.where('start_date < ?', Date.today)
   end
 
   # special requests for the event
@@ -105,7 +105,7 @@ class RsvpsController < ApplicationController
 
   pdf.text "RSVP Report - #{@event.name}", size: 18, style: :bold
   pdf.move_down 10
-  pdf.text "Date: #{@event.date.strftime("%B %d, %Y")}"
+  pdf.text "Date: #{@event.start_date.strftime("%B %d, %Y")}"
   pdf.move_down 20
 
   table_data = [ [ 'S.No.', 'Name', 'Email', 'Status', 'Diet', 'Seating', 'Parking', 'Accommodation' ] ]

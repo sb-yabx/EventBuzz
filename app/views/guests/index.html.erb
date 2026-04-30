@@ -35,7 +35,7 @@
               <span class="badge bg-success mb-3">
                 ✔ RSVP Submitted
               </span>
-              <% elsif event.date < Date.today || event.date == Date.today%>
+              <% elsif event.start_date < Date.today || event.start_date == Date.today%>
              <span class="badge bg-dark mb-3">
                 RSVP not submiited
               </span>
@@ -50,7 +50,7 @@
               <button class="btn btn-success w-100 rounded-pill" disabled>
                 Submitted
               </button>
-              <% elsif rsvp && rsvp.pending? && event.date.strftime("%Y-%m-%d") > Date.today.strftime("%Y-%m-%d")%>
+              <% elsif rsvp && rsvp.pending? && event.start_date.strftime("%Y-%m-%d") > Date.today.strftime("%Y-%m-%d")%>
                <%= link_to "Fill RSVP",
                   new_event_rsvp_path(event),
                   class: "btn btn-dark w-100 rounded-pill" %>
@@ -103,7 +103,7 @@
               <span class="badge bg-success mb-3">
                 ✔ RSVP Submitted
               </span>
-              <% elsif event.date < Date.today || event.date == Date.today%>
+              <% elsif event.start_date < Date.today || event.start_date == Date.today%>
              <span class="badge bg-dark mb-3">
                 RSVP not submiited
               </span>
@@ -118,7 +118,7 @@
               <button class="btn btn-success w-100 rounded-pill" disabled>
                 Submitted
               </button>
-              <% elsif rsvp && rsvp.pending? && event.date.strftime("%Y-%m-%d") > Date.today.strftime("%Y-%m-%d")%>
+              <% elsif rsvp && rsvp.pending? && event.start_date.strftime("%Y-%m-%d") > Date.today.strftime("%Y-%m-%d")%>
                <%= link_to "Fill RSVP",
                   new_event_rsvp_path(event),
                   class: "btn btn-dark w-100 rounded-pill" %>

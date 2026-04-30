@@ -56,10 +56,9 @@
               <!-- Title -->
               <h5 class="fw-bold mb-3"><%= event.name %></h5>
 
-              <!-- Date + Time -->
+              <!-- Date -->
               <h6 class=" mb-2 text-white">
-                <i class="fa-solid fa-calendar"></i><%= event.date.strftime("%d %b") %> • 
-                <i class="fa-solid fa-clock"></i> <%= event.start_time.strftime("%I:%M %p") %>
+                <i class="fa-solid fa-calendar"></i><%= event.start_date.strftime("%d %b") %> • 
               </h6>
 
               <!-- Spacer -->

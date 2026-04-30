@@ -17,7 +17,7 @@
   onclick="openEmailModal(
     <%= @event.id %>,
     '<%= j @event.name %>',
-    '<%= j @event.date.strftime("%B %d, %Y") %>'
+    '<%= j @event.start_date.strftime("%B %d, %Y") %>'
   )">
   Send email
 </button>

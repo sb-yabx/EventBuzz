@@ -32,7 +32,7 @@
           </thead>
 
           <tbody>
-            <% venue.events.order(:date).each do |event| %>
+            <% venue.events.order(:start_date).each do |event| %>
 
               <% accepted = event.rsvps.where(status: "attending").count %>
               <% invited = event.rsvps.count %>
@@ -41,7 +41,7 @@
 
               <tr>
                 <td><%= event.name %></td>
-                <td><%= event.date.strftime("%B %d, %Y") %></td>
+                <td><%= event.start_date.strftime("%B %d, %Y") %></td>
                  <td><%= invited %></td>
                 <td><%= accepted %></td>
 

@@ -4,7 +4,7 @@ class EventManagerController < ApplicationController
     before_action :is_event_manager
 
   def index
-  @events = current_user.events.order(Arel.sql('date < current_date, date ASC'))
+  @events = current_user.events.order(Arel.sql('start_date < current_date, start_date ASC'))
                          .includes(:venue)
 end
 

@@ -13,9 +13,9 @@
 
         <!-- RIGHT: STATUS -->
         <div>
-          <% if @event.date == Date.today %>
+          <% if @event.start_date == Date.today %>
             <span class="badge bg-success px-4 py-2 fs-6">Today</span>
-          <% elsif @event.date > Date.today %>
+          <% elsif @event.start_date > Date.today %>
             <span class="badge bg-primary px-4 py-2 fs-6">Upcoming</span>
           <% else %>
             <span class="badge bg-secondary px-4 py-2 fs-6">Completed</span>
@@ -33,15 +33,11 @@
       <div class="row mb-4">
 
         <div class="col-md-6">
-          <% if @event.date == @event.end_date%>
-          <p><i class="fa-regular fa-calendar"></i> <%= @event.date.strftime("%d %b %Y") %></p>
+          <% if @event.start_date == @event.end_date%>
+          <p><i class="fa-regular fa-calendar"></i> <%= @event.start_date.strftime("%d %b %Y") %></p>
           <%else%>
-           <p><i class="fa-regular fa-calendar"></i> <%= @event.date.strftime("%d %b %Y")%> - <%= @event.end_date.strftime("%d %b %Y")%> </p>
+           <p><i class="fa-regular fa-calendar"></i> <%= @event.start_date.strftime("%d %b %Y")%> - <%= @event.end_date.strftime("%d %b %Y")%> </p>
           <%end%>
-          <p>
-            <i class="fa-regular fa-clock"></i> <%= @event.start_time.strftime("%I:%M %p") %> -
-            <%= @event.end_time.strftime("%I:%M %p") %>
-          </p>
           <p><i class="fa-solid fa-people-robbery"></i> Capacity: <%= @event.capacity %></p>
         </div>
 
@@ -78,7 +74,7 @@
 
         <% rsvp = @event.rsvps.find_by(user_id: current_user.id) %>
 
-        <% if rsvp && rsvp.pending? && @event.date.strftime("%Y-%m-%d") > Date.today.strftime("%Y-%m-%d") %>
+        <% if rsvp && rsvp.pending? && @event.start_date.strftime("%Y-%m-%d") > Date.today.strftime("%Y-%m-%d") %>
           <%= link_to "Fill RSVP",
                 new_event_rsvp_path(@event),
                 class: "btn btn-dark rounded-pill px-4" %>
@@ -154,10 +150,6 @@
                 <%= activity.activity_description %>
               </p>
 
-              <p class="small text-muted mb-0">
-                <p><i class="fa-solid fa-clock"></i><%= activity.start_time.strftime("%I:%M %p") %> -
-                <%= activity.end_time.strftime("%I:%M %p") %>
-              </p>
             </div>
 
             <% if current_user == activity.user || current_user.id == @event.event_manager_id %>

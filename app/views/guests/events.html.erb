@@ -29,8 +29,7 @@
 
             <!-- DATE + TIME -->
             <p class="small text-muted mb-1">
-              <i class="fa-regular fa-calendar"></i> <%= event.date.strftime("%d %b") %> • 
-              <i class="fa-regular fa-clock"></i> <%= event.start_time.strftime("%I:%M %p") %>
+              <i class="fa-regular fa-calendar"></i> <%= event.start_date.strftime("%d %b") %> 
             </p>
 
             <!-- VENUE -->
@@ -48,16 +47,16 @@
 
           <!-- RIGHT SIDE BUTTONS -->
           <div class="d-flex gap-2 mt-3 mt-md-0">
-            <% if event.date < Date.today %>
+            <% if event.start_date < Date.today %>
             <button class="btn btn-dark btn-sm" disabled>Completed</button>
 
-            <% elsif event.date.strftime("%Y-%m-%d") == Date.today.strftime("%Y-%m-%d") %>
+            <% elsif event.start_date.strftime("%Y-%m-%d") == Date.today.strftime("%Y-%m-%d") %>
             <button class="btn btn-dark btn-sm">Today</button>
 
                   <%= link_to "Ask query", new_event_query_path(event), class:"btn btn-dark btn-sm" %>
                       
             <% else %>
-             <%= link_to "#{(event.date.to_date - Date.today).to_i} days left",
+             <%= link_to "#{(event.start_date.to_date - Date.today).to_i} days left",
                   event_path(event),
                   class: "btn btn-dark btn-sm rounded-pill px-3" %>
                   <%= link_to "Ask query", new_event_query_path(event), class:"btn btn-dark btn-sm" %>

@@ -31,8 +31,7 @@
 
             <!-- DATE + TIME -->
             <p class="small text-muted mb-1">
-             <i class="fa-solid fa-calendar-day"></i><%= event.date.strftime("%d %b") %> • 
-             <i class="fa-regular fa-clock"></i><%= event.start_time.strftime("%I:%M %p") %>
+             <i class="fa-solid fa-calendar-day"></i><%= event.start_date.strftime("%d %b") %> • 
             </p>
 
             <!-- VENUE -->
@@ -51,7 +50,7 @@
           <!-- RIGHT SIDE BUTTONS -->
           <div class="d-flex gap-2 mt-3 mt-md-0">
 
-            <% if event.date > Date.today%>
+            <% if event.start_date > Date.today%>
               <%= link_to "View",
                   event_path(event),
                   class: "btn btn-dark btn-sm rounded-pill px-3" %>
@@ -62,7 +61,7 @@
             <%= link_to "Edit",
                   edit_event_path(event),
                   class: "btn btn-outline-dark btn-sm rounded-pill px-3" %>
-                  <% elsif event.date == Date.today %>
+                  <% elsif event.start_date == Date.today %>
                   <span class="status-badge today">
                     <i class="fa-solid fa-calendar-day"></i> Today
                   </span>

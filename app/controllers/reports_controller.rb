@@ -7,13 +7,13 @@ class ReportsController < ApplicationController
   end
 
   def event_reports
-    @upcoming_events = Event.where('date >= ?', Date.today).order(:date)
-    @completed_events = Event.where('date < ?', Date.today).order(:date)
+    @upcoming_events = Event.where('start_date >= ?', Date.today).order(:start_date)
+    @completed_events = Event.where('start_date < ?', Date.today).order(:start_date)
   end
 
   def rsvp_statistics
-  @upcoming_events = Event.where('date >= ?', Date.today).order(:date)
-  @completed_events = Event.where('date < ?', Date.today).order(:date)
+  @upcoming_events = Event.where('start_date >= ?', Date.today).order(:start_date)
+  @completed_events = Event.where('start_date < ?', Date.today).order(:start_date)
   @total_invited = Guest.count
   @accepted = Rsvp.where(status: 'attending').count
   @declined = Rsvp.where(status: 'declined').count
@@ -29,8 +29,8 @@ class ReportsController < ApplicationController
   end
 
   def guest_preferences
-    @upcoming_events = Event.where('date >= ?', Date.today).order(:date)
-    @completed_events = Event.where('date < ?', Date.today).order(:date)
+    @upcoming_events = Event.where('start_date >= ?', Date.today).order(:start_date)
+    @completed_events = Event.where('start_date < ?', Date.today).order(:start_date)
   end
 
   def venue_utilization

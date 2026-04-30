@@ -42,7 +42,6 @@
             <tr class="text-secondary small text-uppercase">
               <th>Name</th>
               <th>Date</th>
-              <th>Time</th>
               <th>Manager</th>
               <th class="text-end">Actions</th>
             </tr>
@@ -52,7 +51,6 @@
 
           <% @events.each do |event| %>
             <tr>
-
               <!-- NAME -->
               <td>
                 <strong class="text-dark"><%= event.name %></strong>
@@ -61,17 +59,11 @@
               <!-- DATE -->
               <td>
                 <span class="badge bg-light text-dark px-3 py-2 rounded-pill">
-                  <%= event.date.strftime("%d %b %Y") %> 
-                  <% if event.date < event.end_date%> - <%= event.end_date.strftime("%d %b %Y")%> <%end%>
-                </span>
+                  <%= event.start_date.strftime("%d %b %Y") %> 
+                  <% if event.start_date < event.end_date%> - <%= event.end_date.strftime("%d %b %Y")%> <%end%>
+                </span> 
               </td>
 
-              <!-- TIME -->
-              <td>
-                <span class="text-muted">
-                  <%= event.start_time.strftime("%I:%M %p") %>
-                </span>
-              </td>
 
               <!-- MANAGER -->
               <td>
@@ -89,13 +81,13 @@
       <i class="bi bi-eye"></i> View
     <% end %>
 
-   <% if event.date < Date.today %>
+   <% if event.start_date < Date.today %>
 
   <span class="status-badge completed">
     ✔ Completed
   </span>
 
-<% elsif event.date == Date.today %>
+<% elsif event.start_date == Date.today %>
 
   <span class="status-badge today">
     Today

@@ -30,19 +30,14 @@
                   class: "form-select rounded-3" %>
           </div>
 
-          <!-- START TIME -->
-          <div class="col-md-6">
-            <%= f.label :start_time, class: "form-label fw-semibold" %>
-            <%= f.time_field :start_time,
-                  class: "form-control rounded-3" %>
+           <div class="col-md-6">
+            <%= f.label :duration, class: "form-label fw-semibold" %>
+            <%= f.text_field :duration,
+                  class: "form-control rounded-3",
+                  placeholder: "Enter activity duration in minutes" %>
           </div>
 
-          <!-- END TIME -->
-          <div class="col-md-6">
-            <%= f.label :end_time, class: "form-label fw-semibold" %>
-            <%= f.time_field :end_time,
-                  class: "form-control rounded-3" %>
-          </div>
+        
 
           <!-- DESCRIPTION -->
           <div class="col-12">

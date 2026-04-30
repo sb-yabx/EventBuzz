@@ -18,8 +18,7 @@
           <div class="event-header">
             <h5><%= activity.event.name %></h5>
             <span>
-              <%= activity.event.date.strftime("%B %d, %Y") %>, 
-              <%= activity.event.start_time.strftime("%I:%M %p") %>
+              <%= activity.event.start_date.strftime("%B %d, %Y") %>, 
             </span>
           </div>
           <div class="text-center mt-3">
@@ -53,8 +52,7 @@
           <div class="event-header">
             <h5><%= activity.event.name %></h5>
             <span>
-              <%= activity.event.date.strftime("%B %d, %Y") %>, 
-              <%= activity.event.start_time.strftime("%I:%M %p") %>
+              <%= activity.event.start_date.strftime("%B %d, %Y") %>
             </span>
           </div>
 

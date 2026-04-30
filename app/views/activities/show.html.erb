@@ -20,14 +20,13 @@
       <div class="info-grid">
         <div>
           <strong>Date:</strong>
-          <p><%= @activity.event.date.strftime("%d %b %Y")%></p>
+          <p><%= @activity.event.start_date.strftime("%d %b %Y")%></p>
         </div>
-
-        <div>
-          <strong>Time:</strong>
-          <p><%= @activity.start_time.strftime("%I:%M %p") %></p>
+         <div>
+          <strong>Duration:</strong>
+          <p><%=@activity.duration%> mins</p>
+          
         </div>
-
         <div>
           <strong>Location:</strong>
           <p><%=@activity.event.venue.name%> - <%= @activity.event.venue.address %></p>

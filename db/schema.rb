@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_27_132103) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_30_063212) do
   create_table "activities", force: :cascade do |t|
     t.text "activity_description", null: false
     t.string "activity_name", null: false
     t.datetime "created_at", null: false
-    t.datetime "end_time", null: false
+    t.integer "duration"
     t.integer "event_id", null: false
-    t.datetime "start_time", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.index ["event_id"], name: "index_activities_on_event_id"
@@ -27,14 +26,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_27_132103) do
   create_table "events", force: :cascade do |t|
     t.integer "capacity"
     t.datetime "created_at", null: false
-    t.datetime "date"
     t.text "description"
     t.date "end_date"
-    t.datetime "end_time", null: false
     t.integer "event_manager_id"
     t.integer "guests_count"
     t.string "name", null: false
-    t.datetime "start_time", null: false
+    t.datetime "start_date"
     t.datetime "updated_at", null: false
     t.integer "venue_id", null: false
     t.index ["event_manager_id"], name: "index_events_on_event_manager_id"
@@ -43,10 +40,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_27_132103) do
 
   create_table "guests", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "email"
+    t.string "email", null: false
     t.integer "event_id", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.index ["event_id", "email"], name: "index_guests_on_event_id_and_email", unique: true
     t.index ["event_id"], name: "index_guests_on_event_id"
     t.index ["user_id"], name: "index_guests_on_user_id"
   end

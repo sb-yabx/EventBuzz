@@ -25,7 +25,7 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = Event.all.order(Arel.sql('date < current_date, date ASC')).includes(:event_manager)
+    @events = Event.all.order(Arel.sql('start_date < current_date, start_date ASC')).includes(:event_manager)
   end
 
   def show
@@ -91,27 +91,38 @@ class EventsController < ApplicationController
 
   # excel
   if params[:excel_file].present?
-    sheet = Roo::Spreadsheet.open(params[:excel_file].path)
+  file = params[:excel_file]
 
-    header = sheet.row(1)
-    email_index = header.index('email')
+  extension = File.extname(file.original_filename).downcase
+  allowed_extensions = ['.xlsx', '.xls', '.csv']
 
-    if email_index.nil?
-      redirect_to invite_guests_event_path(@event), alert: "Excel must have 'email' column" and return
-    end
-
-    (2..sheet.last_row).each do |i|
-      email = sheet.row(i)[email_index]
-      emails << email if email.present?
-    end
+  unless allowed_extensions.include?(extension)
+    redirect_to event_invite_guests_path(@event),
+      alert: "Only Excel files (.xlsx, .xls, .csv) are allowed" and return
   end
+
+  sheet = Roo::Spreadsheet.open(file.path, extension: extension.delete('.').to_sym)
+
+  header = sheet.row(1).map { |h| h.to_s.downcase.strip }
+  email_index = header.index('email')
+
+  if email_index.nil?
+    redirect_to invite_guests_event_path(@event),
+      alert: "Excel must contain 'email' column" and return
+  end
+
+  (2..sheet.last_row).each do |i|
+    email = sheet.row(i)[email_index]
+    emails << email.to_s.strip if email.present?
+  end
+end
 
   # Remove duplicates
   emails = emails.map(&:downcase).uniq
 
   emails.each do |email|
     # Avoid duplicate guest
-    guest = Guest.find_or_create_by(email: email, event_id: @event.id)
+    guest = Guest.create_or_find_by(email: email, event_id: @event.id)
 
     user = User.find_by(email: email)
 
@@ -170,10 +181,8 @@ end
   def event_params
     params.require(:event).permit(:name,
     :description,
-    :date,
+    :start_date,
     :end_date,
-    :start_time,
-    :end_time,
     :event_manager_id,
     :venue_id,
     :capacity)
@@ -181,7 +190,8 @@ end
 
 
   def verify_event_ownership!
-  @event = Event.find(params[:id])
+  event_id = params[:id] || params[:event_id]
+  @event = Event.find(event_id)
   return if current_user.admin?
     unless @event.event_manager_id == current_user.id
     redirect_to root_path, alert: 'Access denied'

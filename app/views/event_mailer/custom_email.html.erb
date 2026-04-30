@@ -6,7 +6,7 @@
 
 <p><strong>Event: <%= @event&.name %></strong></p>
 <p><strong>Date:</strong> <%= @event.date.strftime("%B %d, %Y")%>
-<% if @event.date < @event.end_date%>
+<% if @event.start_date < @event.end_date%>
 to <%= @event.end_date.strftime("%B %d, %Y")%>
 <%end%> </p>
 
