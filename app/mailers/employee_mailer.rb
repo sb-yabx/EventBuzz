@@ -7,6 +7,6 @@ class EmployeeMailer < ApplicationMailer
 
     @reset_link = edit_user_password_url(reset_password_token: @token)
 
-    mail(to: @user.email, subject: "Welcome to EventBuzz! Set your password")
+    mail(to: @user.email, subject: 'Welcome to EventBuzz! Set your password')
   end
 end

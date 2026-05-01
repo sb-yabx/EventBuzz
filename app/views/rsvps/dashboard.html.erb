@@ -47,6 +47,10 @@
         <% end %>
       </div>
     <% end %>
+
+    <div class="simple-pagination mt-4">
+      <%= will_paginate @upcoming_events, previous_label: "Prev", next_label: "Next" %>
+    </div>
   </div>
   <% else %>
       <div class="col-12">
@@ -99,6 +103,9 @@
         <% end %>
       </div>
     <% end %>
+     <div class="simple-pagination mt-4">
+  <%= will_paginate @past_events, previous_label: "Prev", next_label: "Next" %>
+    </div>
   </div>
   <% else %>
       <div class="col-12">

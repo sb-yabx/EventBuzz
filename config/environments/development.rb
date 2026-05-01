@@ -92,5 +92,4 @@ Rails.application.configure do
   authentication: ENV['SMTP_AUTH'],
   enable_starttls_auto: true
 }
-
 end

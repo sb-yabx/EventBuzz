@@ -49,6 +49,9 @@
 
     <% end %>
   </div>
+  <div class="simple-pagination mt-4">
+          <%= will_paginate @upcoming_events, previous_label: "Prev", next_label: "Next" %>
+        </div>
 
   
   <hr class="my-5">
@@ -98,5 +101,8 @@
 
     <% end %>
   </div>
+  <div class="simple-pagination mt-4">
+          <%= will_paginate @completed_events, previous_label: "Prev", next_label: "Next" %>
+        </div>
 
 </div>

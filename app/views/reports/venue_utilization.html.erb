@@ -1,11 +1,16 @@
+
+
+
 <div class="container mt-5">
   <h2 class="text-center mb-5"><i class="fa-solid fa-chart-simple"></i> Venue Utilization Report</h2>
    <div class="text-end">
      <%= link_to "← Back", request.referer || root_path, class: "btn  btn-dark rounded-pill px-3" %>
      </div>
+     <div class="simple-pagination mt-4">
+          <%= will_paginate @venues, previous_label: "Prev", next_label: "Next" %>
+        </div>
   <h4><%= @venues.count %> Venues</h4>
 
-  
 
   <% @venues.each do |venue| %>
   <%= link_to venue_path(venue), class:"text-decoration-none" do %>
@@ -62,7 +67,6 @@
             <% end %>
           </tbody>
         </table>
-
       <% else %>
         <p class="text-muted mt-3">No events held in this venue</p>
       <% end %>

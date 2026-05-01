@@ -16,7 +16,7 @@
         </div>
         <h6 class="text-muted">Event Managers</h6>
         <h3 class="fw-bold">
-          <%= @users.count { |u| u.role == "event_manager" } %>
+          <%= @event_managers %>
         </h3>
         <%= link_to "View All", show_event_managers_path, class: "btn btn-outline-info rounded-pill mt-3" %>
       </div>
@@ -30,7 +30,7 @@
         </div>
         <h6 class="text-muted">Activity Owners</h6>
         <h3 class="fw-bold">
-          <%= @users.count { |u| u.role == "activity_owner" } %>
+          <%= @activity_owners %>
         </h3>
         <%= link_to "View All", show_activity_owners_path, class: "btn btn-outline-warning rounded-pill mt-3" %>
       </div>
@@ -44,7 +44,7 @@
         </div>
         <h6 class="text-muted">Events</h6>
         <h3 class="fw-bold">
-          <%= @events.count %>
+          <%= @events %>
         </h3>
         <%= link_to "View All", events_path, class: "btn btn-outline-dark rounded-pill mt-3" %>
       </div>
@@ -58,7 +58,7 @@
         </div>
         <h6 class="text-muted">Venues</h6>
         <h3 class="fw-bold">
-          <%= @venues.count %>
+          <%= @venues %>
         </h3>
         <%= link_to "View All", venues_path, class: "btn btn-outline-danger rounded-pill mt-3" %>
       </div>

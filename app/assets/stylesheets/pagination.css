@@ -1,0 +1,41 @@
+.simple-pagination {
+  text-align: center;
+}
+
+.simple-pagination .pagination {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.simple-pagination .pagination a,
+.simple-pagination .pagination span {
+  padding: 6px 12px;
+  text-decoration: none;
+  border-radius: 6px;
+  background: #f1f1f1;
+  color: #333;
+  font-size: 14px;
+}
+
+.simple-pagination .pagination a:hover {
+  background: #ddd;
+}
+
+.simple-pagination .pagination .current {
+  background: #0d6efd;
+  color: #fff;
+}
+
+.simple-pagination .pagination .disabled {
+  color: #aaa;
+}
+
+
+.simple-pagination .pagination em {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #0d6efd;
+  color: #fff;
+  font-style: normal; /* important: removes italic */
+  display: inline-block;
+}

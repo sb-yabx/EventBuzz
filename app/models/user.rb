@@ -1,12 +1,14 @@
 class User < ApplicationRecord
-  has_many :events
   has_many :events, foreign_key: 'event_manager_id', dependent: :nullify
   has_many :activities
   has_many :rsvps
   has_many :queries
   after_create :link_guest_records
 
-  
+  validates :name, presence: true
+  validates :role, presence: true
+
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -20,19 +22,11 @@ class User < ApplicationRecord
   end
 
   def link_guest_records
-  guests = Guest.where(email: self.email)
-
-  guests.each do |guest|
-    guest.update(user_id: self.id)
-
-    if self.role.blank?
-      self.update(role: 'guest')
-    end
-
-    # Also create RSVP if not exists
-    Rsvp.find_or_create_by(user_id: self.id, event_id: guest.event_id) do |r|
-      r.status = 'pending'
+    return if Guest.where(email: email).empty?
+    Guest.where(email: email).update_all(user_id: id)   # 1 UPDATE
+    update_column(:role, 'guest') if role.blank?         # 1 UPDATE max
+    Guest.where(email: email).pluck(:event_id).each do |event_id|
+      Rsvp.find_or_create_by(user_id: id, event_id: event_id) { |r| r.status = :pending }
     end
   end
-end
 end

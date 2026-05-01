@@ -1,5 +1,4 @@
 class QueryChannel < ApplicationCable::Channel
-
   def subscribed
     @query = Query.find(params[:query_id])
     is_owner   = @query.user_id == current_user.id
@@ -23,4 +22,3 @@ class QueryChannel < ApplicationCable::Channel
     })
   end
 end
-

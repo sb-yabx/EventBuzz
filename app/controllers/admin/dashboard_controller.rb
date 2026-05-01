@@ -3,15 +3,17 @@ class Admin::DashboardController < ApplicationController
   before_action :require_admin
 
   def index
-    @users = User.where(role: [ :event_manager, :activity_owner ])
-    @venues = Venue.all
-    @events = Event.all
-    @activities = Activity.all
-    @rsvps = Rsvp.all
+    @event_managers = User.where(role: :event_manager).count
+    @activity_owners = User.where(role: :activity_owner).count
+    @venues = Venue.count
+    @events = Event.count
+    @activities = Activity.count
+    @rsvps = Rsvp.count
   end
 
   def all_users
     @users = User.where(role: [ :event_manager, :activity_owner ])
+    .paginate(page: params[:page], per_page: 2)
   end
 
 

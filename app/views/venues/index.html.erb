@@ -90,8 +90,13 @@
 
       <% end %>
 
+      <div class="simple-pagination mt-4">
+  <%= will_paginate @venues, previous_label: "Prev", next_label: "Next" %>
+</div>
+
     </div>
 
   </div>
 
 </div>
+

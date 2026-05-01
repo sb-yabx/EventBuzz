@@ -34,4 +34,8 @@
   <% else %>
     <p class="text-center text-muted">No queries found.</p>
   <% end %>
+  <div class="simple-pagination mt-4">
+  <%= will_paginate @queries, previous_label: "Prev", next_label: "Next" %>
+    </div>
+
 </div>

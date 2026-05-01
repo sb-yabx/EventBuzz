@@ -4,8 +4,8 @@ class EventsController < ApplicationController
 
     before_action :authenticate_user!
 
-    before_action :verify_event_ownership! ,  only: [:edit, :update, :destroy,
-    :invite_guests, :send_invites, :send_custom_email]
+    before_action :verify_event_ownership!,  only: [ :edit, :update, :destroy,
+    :invite_guests, :send_invites, :send_custom_email ]
 
     before_action :is_event_manager, except: [ :show, :index ]
     before_action :is_admin, only: [ :index ]
@@ -26,6 +26,7 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all.order(Arel.sql('start_date < current_date, start_date ASC')).includes(:event_manager)
+    .paginate(page: params[:page], per_page: 2)
   end
 
   def show
@@ -50,9 +51,9 @@ class EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:id])
     if @event.destroy
-      redirect_to event_path(@event), notice: 'Event deleted successfully'
+      redirect_to events_path, notice: 'Event deleted.'
     else
-      redirect_to event_path(@event), alert: 'Try again'
+      redirect_to event_path(@event), alert: 'Could not delete event.'
     end
   end
 
@@ -94,11 +95,11 @@ class EventsController < ApplicationController
   file = params[:excel_file]
 
   extension = File.extname(file.original_filename).downcase
-  allowed_extensions = ['.xlsx', '.xls', '.csv']
+  allowed_extensions = [ '.xlsx', '.xls', '.csv' ]
 
   unless allowed_extensions.include?(extension)
     redirect_to event_invite_guests_path(@event),
-      alert: "Only Excel files (.xlsx, .xls, .csv) are allowed" and return
+      alert: 'Only Excel files (.xlsx, .xls, .csv) are allowed' and return
   end
 
   sheet = Roo::Spreadsheet.open(file.path, extension: extension.delete('.').to_sym)
@@ -115,7 +116,7 @@ class EventsController < ApplicationController
     email = sheet.row(i)[email_index]
     emails << email.to_s.strip if email.present?
   end
-end
+  end
 
   # Remove duplicates
   emails = emails.map(&:downcase).uniq
@@ -197,6 +198,4 @@ end
     redirect_to root_path, alert: 'Access denied'
     end
   end
-
-
 end

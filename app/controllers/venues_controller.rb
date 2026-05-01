@@ -8,16 +8,16 @@ class VenuesController < ApplicationController
   end
 
   def create
-    @venue = Venue.create(venue_params)
+   @venue = Venue.new(venue_params)
     if @venue.save
-      redirect_to root_path
+      redirect_to venues_path, notice: 'Venue created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def index
-    @venues = Venue.all
+    @venues = Venue.paginate(page: params[:page], per_page: 2)
   end
 
   def show

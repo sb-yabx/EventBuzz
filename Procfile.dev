@@ -1,3 +1,6 @@
-web: env RUBY_DEBUG_OPEN=true bin/rails server
+web: bin/rails server
 js: yarn build --watch
 css: yarn watch:css
+
+
+# Use: bin/rails server & then ruby-debug attach only when needed

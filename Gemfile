@@ -76,9 +76,9 @@ gem 'roo'
 
 gem 'devise'
 
-gem 'dotenv-rails', groups: [:development, :test]
+gem 'dotenv-rails', groups: [ :development, :test ]
 
-group :developement , :test do 
+group :developement, :test do
   gem 'bullet'
 end
 
@@ -89,3 +89,6 @@ gem 'whenever', require: false
 # for pdf download
 gem 'prawn'
 gem 'prawn-table'
+
+
+gem 'will_paginate', '~> 4.0'

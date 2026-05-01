@@ -22,7 +22,7 @@ class ActivitiesController < ApplicationController
     @activity = @event.activities.new(activity_params)
 
     if @activity.save
-      flash[:notice] = 'Event created successfully!'
+      flash[:notice] = 'Activity created successfully!'
       redirect_to event_path(@event)
     else
       flash.now[:alert] = 'Try again'

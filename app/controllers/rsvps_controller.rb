@@ -62,7 +62,8 @@ class RsvpsController < ApplicationController
   def dashboard
     @events = current_user.events.includes(:venue)
     @upcoming_events = @events.where('start_date >= ?', Date.today)
-    @past_events = @events.where('start_date < ?', Date.today)
+                        .paginate(page: params[:page], per_page: 3)
+    @past_events = @events.where('start_date < ?', Date.today).paginate(page: params[:page], per_page: 3)
   end
 
   # special requests for the event
@@ -86,7 +87,7 @@ class RsvpsController < ApplicationController
   @rsvps = @event.rsvps.includes(:user)
 
   if params[:status].present?
-    @rsvps = @rsvps.where(status: params[:status])
+    @rsvps = @rsvps.where(status: Rsvp.statuses[params[:status]])
   end
 
   if params[:parking].present?

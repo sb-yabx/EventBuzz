@@ -31,6 +31,9 @@
 
     <% end %>
   </div>
+   <div class="simple-pagination mt-4">
+          <%= will_paginate @upcoming_activities, previous_label: "Prev", next_label: "Next" %>
+        </div>
   <% else %>
       <div class="col-12">
         <p class="text-center text-muted">No upcoming events found.</p>
@@ -66,5 +69,8 @@
 
     <% end %>
   </div>
+   <div class="simple-pagination mt-4">
+          <%= will_paginate @past_activities, previous_label: "Prev", next_label: "Next" %>
+        </div>
 
 </div>

@@ -36,6 +36,9 @@
 
     <% end %>
   </div>
+   <div class="simple-pagination mt-4">
+  <%= will_paginate @events, previous_label: "Prev", next_label: "Next" %>
+    </div>
   <%else%>
     <p class="text-center text-muted">No queries found.</p>
   <%end%>
